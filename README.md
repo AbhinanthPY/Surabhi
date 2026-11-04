@@ -43,7 +43,7 @@ The private Sites deployment configuration is in `.openai/hosting.json`; retain 
 ```text
 src/
   components/
-    layout/       Navigation, brand placeholder, page shell, footer
+    layout/       Navigation, official branding, page shell, footer
     sections/     Activity explorer, timeline, enquiry form, closing CTA
     ui/           Photography, headings, cards, links, content notices
   data/           Typed, reusable activities, projects, articles, milestones
@@ -64,11 +64,11 @@ Edit **`src/data/content.ts`** to update activity, project, article, and timelin
 
 ### Official logo
 
-The logo was not attached. A clearly marked temporary text wordmark is used; it is not a reconstructed logo. Place the original image at **`public/assets/surabhi-logo.png`**, then restart Vite or rebuild. `Brand` detects it at build time, preserves its colors and proportions, and uses it in the header and footer. An official logo is never recolored by CSS. The large footer “SURABHI” is a separate decorative typographic element.
+The supplied official image is stored unchanged at **`public/assets/surabhi-logo.png`**. The shared `Brand` component uses it in the header, mobile menu, and footer, with its original colors, proportions, content, and white background preserved. Responsive sizing keeps the full image visible; no cropping, recreation, filters, or recoloring are applied. The large footer “SURABHI” remains a separate decorative typographic element.
 
 ### Verification required before public launch
 
-- Supply the original logo, registration certificate, registered bye-laws, verified leadership information, and official contact/office details.
+- Supply the registration certificate, registered bye-laws, verified leadership information, and official contact/office details.
 - Confirm exact membership categories, rights, responsibilities, fees, and admission procedures against the actual bye-laws. No unverified rules are invented in this build.
 - The registration date **12 October 2023** is attributed to the supplied brief. It was not independently checked against the original certificate.
 - Registered objectives are clearly distinguished from confirmed operational services. Biogas, farm tourism, and veterinary healthcare are labeled as concepts/proposals; dairy infrastructure is a development objective.

@@ -28,3 +28,7 @@ Design references, used for principles only: [Floema](https://floema.com/en/abou
 - `people`: [Indian Female Farmer Working in Field at Sunset — Votso Sothu, Pexels](https://www.pexels.com/photo/indian-female-farmer-working-in-field-at-sunset-35635150/). This is illustrative Indian farming photography, not a verified Surabhi member or location.
 
 The earlier hero assets remain available for replacement and comparison. All new photographs are local, with WebP, JPEG fallback, mobile variants, and recorded intrinsic dimensions.
+
+## Official Surabhi logo
+
+`public/assets/surabhi-logo.png` is the user-supplied official logo (1377 × 1048 PNG). It is copied byte-for-byte from the supplied attachment and displayed in full, with its original green, black, white background, typography, and proportions. This replaces the earlier temporary text branding.

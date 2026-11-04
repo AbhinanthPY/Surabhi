@@ -91,9 +91,9 @@ export default function Legal() {
             <section>
               <h2>Branding and photography</h2>
               <p>
-                The official logo was not supplied. The marked temporary text
-                wordmark should be replaced with the official asset before
-                public launch. Stock photographs illustrate themes and
+                The official Surabhi logo is reproduced from the supplied image,
+                with its original colors, proportions, and content preserved.
+                Stock photographs illustrate themes and
                 landscapes; they are not photographs of confirmed Surabhi
                 facilities, projects, members, or staff. Image sources and font
                 licensing notes are included with the project documentation.

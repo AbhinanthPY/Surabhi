@@ -11,37 +11,10 @@ export const navigation = [
   { to: "/membership", label: "Membership" },
   { to: "/news", label: "News & Insights" },
 ];
-const logoAssets = import.meta.glob("/public/assets/surabhi-logo.png", {
-  eager: true,
-  query: "?url",
-  import: "default",
-});
-const officialLogo = logoAssets["/public/assets/surabhi-logo.png"] as
-  | string
-  | undefined;
 export function Brand({ footer = false }: { footer?: boolean }) {
   return (
-    <Link
-      to="/"
-      className={`brand ${footer ? "brand-footer" : ""}`}
-      aria-label="Surabhi home"
-    >
-      {officialLogo ? (
-        <img
-          src={officialLogo}
-          alt="Surabhi Multi State Co-operative Dairy Society Ltd."
-        />
-      ) : (
-        <>
-          <span className="brand-name">
-            SURABHI<span className="brand-period">.</span>
-          </span>
-          <span className="brand-caption">
-            CO-OPERATION. CULTIVATING POSSIBILITY.
-          </span>
-          <span className="brand-placeholder">Temporary wordmark</span>
-        </>
-      )}
+    <Link to="/" className={`brand brand-official ${footer ? 'brand-footer' : ''}`} aria-label="Surabhi home">
+      <img src="/assets/surabhi-logo.png" alt="Surabhi Multi State Co-operative Dairy Society Ltd." width={1377} height={1048} decoding="async"/>
     </Link>
   );
 }

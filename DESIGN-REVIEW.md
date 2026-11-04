@@ -25,4 +25,4 @@ These are critical design judgments, not claims of awards, formal benchmarking, 
 
 ## Content integrity
 
-The official logo was still not supplied; the existing marked temporary wordmark and official-asset detection remain. The color identity is retained. Organizational objectives, proposed concepts, demonstration articles, pending leadership and document information, and the non-sending enquiry form keep their original distinctions. No achievements, impact figures, membership provisions, officeholders, or contact channels were invented.
+The official logo was supplied after the editorial refinement and now replaces the temporary wordmark in the header, mobile menu, and footer. The supplied image is preserved unchanged. The color identity is retained. Organizational objectives, proposed concepts, demonstration articles, pending leadership and document information, and the non-sending enquiry form keep their original distinctions. No achievements, impact figures, membership provisions, officeholders, or contact channels were invented.
