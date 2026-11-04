@@ -7,7 +7,7 @@ import SiteHeader from "./SiteHeader";
 import SiteFooter from "./SiteFooter";
 
 export default function Layout() {
-  const { pathname, hash } = useLocation();
+  const { pathname, hash, key } = useLocation();
   const smoothScroll = useRef<Lenis | undefined>(undefined);
   useLayoutEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -79,7 +79,7 @@ export default function Layout() {
       observer?.disconnect();
       window.cancelAnimationFrame(frame);
     };
-  }, [pathname, hash]);
+  }, [pathname, hash, key]);
   return (
     <>
       <SiteHeader />
