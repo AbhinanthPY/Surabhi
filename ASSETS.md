@@ -35,7 +35,7 @@ The earlier hero assets remain available for replacement and comparison. All new
 
 ## Transparent navigation logo
 
-`public/assets/surabhi-logo-transparent.png` is a PNG with actual alpha transparency, created from the supplied logo using built-in ImageGen background extraction. The original supplied file remains unchanged. White-on-dark and dark-on-light variants are rendered with CSS, and the compact navigation uses a smaller width.
+`public/assets/surabhi-logo-transparent.png` is a PNG with actual alpha transparency, created from the supplied logo using built-in ImageGen background extraction. The original supplied file remains unchanged. White-on-dark treatment and the original green-and-black colors on light surfaces are controlled with CSS, and the compact navigation uses a smaller width.
 
 Final built-in ImageGen edit prompt:
 

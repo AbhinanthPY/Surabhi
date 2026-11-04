@@ -67,3 +67,7 @@ The supplied 1377 × 1048 PNG replaces the temporary wordmark in the shared head
 - Mobile at 320px: white hero logo, white menu logo, and smaller dark About-page logo verified; no horizontal overflow. The menu opens and its About link navigates correctly.
 - No browser errors or warnings observed during these checks.
 - Proof: `screenshots/transparent-logo-hero.png`, `screenshots/transparent-logo-light.png`, and `screenshots/transparent-logo-mobile.png`.
+
+## Original-color light navbar — 4 November 2026
+
+The light navbar now shows the transparent logo in its original green and black colors, with no monochrome filter. The hero remains white. Verified both states in the browser at the user's 625px viewport; the scrolled logo loads correctly at 78px CSS width. Production build passes. Proof: `screenshots/original-color-navbar.png`.

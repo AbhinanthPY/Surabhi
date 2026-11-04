@@ -92,7 +92,7 @@ export default function Legal() {
               <h2>Branding and photography</h2>
               <p>
                 The Surabhi logo uses a transparent derivative of the supplied
-                artwork. White and dark display treatments adapt it to the
+                artwork. White and original-color display treatments adapt it to the
                 page background, as requested. The original file is retained.
                 Stock photographs illustrate themes and
                 landscapes; they are not photographs of confirmed Surabhi
