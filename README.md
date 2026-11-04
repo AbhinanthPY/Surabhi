@@ -64,7 +64,7 @@ Edit **`src/data/content.ts`** to update activity, project, article, and timelin
 
 ### Official logo
 
-The supplied official image is stored unchanged at **`public/assets/surabhi-logo.png`**. The shared `Brand` component uses it in the header, mobile menu, and footer, with its original colors, proportions, content, and white background preserved. Responsive sizing keeps the full image visible; no cropping, recreation, filters, or recoloring are applied. The large footer “SURABHI” remains a separate decorative typographic element.
+The original supplied image is retained unchanged at **`public/assets/surabhi-logo.png`**. The website uses **`public/assets/surabhi-logo-transparent.png`**, a background-extracted derivative. The shared `Brand` component displays a white treatment over the hero and dark surfaces, and a smaller dark treatment on the light navigation surface and inner pages. CSS changes the rendered color and width without replacing image files during scroll. The large footer “SURABHI” remains a separate decorative typographic element.
 
 ### Verification required before public launch
 

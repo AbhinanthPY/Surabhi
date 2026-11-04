@@ -91,8 +91,9 @@ export default function Legal() {
             <section>
               <h2>Branding and photography</h2>
               <p>
-                The official Surabhi logo is reproduced from the supplied image,
-                with its original colors, proportions, and content preserved.
+                The Surabhi logo uses a transparent derivative of the supplied
+                artwork. White and dark display treatments adapt it to the
+                page background, as requested. The original file is retained.
                 Stock photographs illustrate themes and
                 landscapes; they are not photographs of confirmed Surabhi
                 facilities, projects, members, or staff. Image sources and font

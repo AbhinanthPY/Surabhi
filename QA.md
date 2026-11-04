@@ -55,6 +55,15 @@ The production build includes strict TypeScript checking. New homepage art direc
 
 - Production smoke checks verified the 390px homepage's portrait image source and no overflow. Selecting Animal Healthcare remained stable after a Page Down action. The production build completed with strict TypeScript checks.
 
-## Official logo integration
+## Original logo integration (before transparency update)
 
 The supplied 1377 × 1048 PNG replaces the temporary wordmark in the shared header, mobile menu, and footer. Its SHA-256 digest matches the attachment exactly. Display uses `object-fit: contain`, intrinsic image dimensions, and no CSS filters. The build passes; 1440px desktop and 320px mobile checks found no horizontal overflow, and each visible logo loaded from the supplied asset. The placeholder-logo statement was removed from the legal page and documentation.
+
+## Transparent logo update — 4 November 2026
+
+- Original supplied PNG retained unchanged; the displayed derivative has actual PNG alpha transparency.
+- Production build passed (`npm run build`).
+- Desktop at 1440px: hero logo is white at 160px CSS width; after scrolling it becomes dark at 94px, without a white plaque.
+- Mobile at 320px: white hero logo, white menu logo, and smaller dark About-page logo verified; no horizontal overflow. The menu opens and its About link navigates correctly.
+- No browser errors or warnings observed during these checks.
+- Proof: `screenshots/transparent-logo-hero.png`, `screenshots/transparent-logo-light.png`, and `screenshots/transparent-logo-mobile.png`.

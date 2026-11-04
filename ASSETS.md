@@ -31,4 +31,12 @@ The earlier hero assets remain available for replacement and comparison. All new
 
 ## Official Surabhi logo
 
-`public/assets/surabhi-logo.png` is the user-supplied official logo (1377 × 1048 PNG). It is copied byte-for-byte from the supplied attachment and displayed in full, with its original green, black, white background, typography, and proportions. This replaces the earlier temporary text branding.
+`public/assets/surabhi-logo.png` is the user-supplied official logo (1377 × 1048 PNG). It is retained byte-for-byte from the supplied attachment, including its original green, black and white canvas. The website now displays the transparent derivative described below.
+
+## Transparent navigation logo
+
+`public/assets/surabhi-logo-transparent.png` is a PNG with actual alpha transparency, created from the supplied logo using built-in ImageGen background extraction. The original supplied file remains unchanged. White-on-dark and dark-on-light variants are rendered with CSS, and the compact navigation uses a smaller width.
+
+Final built-in ImageGen edit prompt:
+
+> Use case: background-extraction. Edit target: the supplied official Surabhi logo. Produce a precise transparent-background cutout of this EXACT logo, not a redesign. Remove the plain white background and white negative spaces, including enclosed background regions and letter counters. Retain ONLY the original green and black printed artwork. Preserve the leaf, circular organic S-shaped mark, cow illustration, every edge and stroke, font shapes, all lettering, original green and black colors, original proportions, relative positioning and sharpness. Preserve exact text: 'SURABHI' and 'Multi State Co-operative Dairy Society Ltd.'. No new text, no new symbols, no rearrangement, no shadows, no glow, no outline, no colored background, no white rectangle, no checkerboard baked into pixels. Use actual PNG alpha transparency. Keep the entire logo and registered-name line visible with a modest transparent margin, not a large empty canvas.

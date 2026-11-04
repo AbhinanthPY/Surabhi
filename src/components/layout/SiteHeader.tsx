@@ -14,7 +14,7 @@ export const navigation = [
 export function Brand({ footer = false }: { footer?: boolean }) {
   return (
     <Link to="/" className={`brand brand-official ${footer ? 'brand-footer' : ''}`} aria-label="Surabhi home">
-      <img src="/assets/surabhi-logo.png" alt="Surabhi Multi State Co-operative Dairy Society Ltd." width={1377} height={1048} decoding="async"/>
+      <img src="/assets/surabhi-logo-transparent.png" alt="Surabhi Multi State Co-operative Dairy Society Ltd." width={1437} height={1094} decoding="async"/>
     </Link>
   );
 }
