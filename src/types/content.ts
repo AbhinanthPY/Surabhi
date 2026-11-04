@@ -4,6 +4,7 @@ export interface Activity {
   title: string;
   shortTitle: string;
   image: string;
+  imagePosition?: string;
   alt: string;
   summary: string;
   description: string;
@@ -16,6 +17,7 @@ export interface Project {
   category: string;
   status: string;
   image: string;
+  imagePosition?: string;
   alt: string;
   summary: string;
   vision: string;
@@ -26,6 +28,7 @@ export interface Article {
   title: string;
   category: string;
   image: string;
+  imagePosition?: string;
   alt: string;
   excerpt: string;
   readTime: string;

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { ArrowUpRight, Menu, X } from "lucide-react";
+import gsap from "gsap";
 
 export const navigation = [
   { to: "/", label: "Home" },
@@ -52,30 +53,67 @@ export default function SiteHeader() {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 35);
+    let frame = 0;
+    let last = window.scrollY > 35;
+    setScrolled(last);
+    const update = () => {
+      const next = window.scrollY > 35;
+      if (next !== last) {
+        last = next;
+        setScrolled(next);
+      }
+      const progress =
+        window.scrollY /
+        Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       document.documentElement.style.setProperty(
         "--scroll-progress",
-        `${window.scrollY / Math.max(1, document.documentElement.scrollHeight - window.innerHeight)}`,
+        `${Math.min(1, Math.max(0, progress))}`,
       );
+      frame = 0;
     };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      cancelAnimationFrame(frame);
+    };
   }, [pathname]);
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
   useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    let animation: gsap.Context | undefined;
     if (open) {
       dialog.current?.showModal();
       document.body.style.overflow = "hidden";
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        animation = gsap.context(() => {
+          gsap.fromTo(
+            "nav a",
+            { y: 24, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.55,
+              stagger: 0.055,
+              ease: "power3.out",
+              clearProps: "transform,opacity",
+            },
+          );
+        }, dialog);
+      }
     } else {
       dialog.current?.close();
-      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = "";
+      animation?.revert();
+      document.body.style.overflow = previousOverflow;
     };
   }, [open]);
   useEffect(() => {
@@ -104,9 +142,9 @@ export default function SiteHeader() {
               </NavLink>
             ))}
           </nav>
-          <Link to="/contact" className="header-contact">
-            Let’s connect <ArrowUpRight size={16} />
-          </Link>
+          <NavLink to="/contact" className="header-contact">
+            Let’s connect <ArrowUpRight size={16} aria-hidden="true" />
+          </NavLink>
           <button
             ref={menuButton}
             className="menu-toggle"
@@ -126,7 +164,7 @@ export default function SiteHeader() {
         onCancel={() => setOpen(false)}
         onClose={() => {
           setOpen(false);
-          menuButton.current?.focus();
+          menuButton.current?.focus({ preventScroll: true });
         }}
       >
         <div className="mobile-menu-top">

@@ -1,22 +1,12 @@
-import { Link } from "react-router-dom";
-import { ArrowDown, MoveDown, Leaf, ChevronRight } from "lucide-react";
-import {
-  ArrowLink,
-  Eyebrow,
-  Photo,
-  ProjectCard,
-  NewsCard,
-} from "../components/ui/Elements";
+import { Leaf } from "lucide-react";
+import { ArrowLink, Eyebrow, Photo, NewsCard } from "../components/ui/Elements";
+import HeroSection from "../components/sections/HeroSection";
+import FeaturedProjects from "../components/sections/FeaturedProjects";
+import { RevealHeading } from "../components/ui/RevealHeading";
 import ActivityShowcase from "../components/sections/ActivityShowcase";
 import Timeline from "../components/sections/Timeline";
 import FinalCTA from "../components/sections/FinalCTA";
-import {
-  images,
-  projects,
-  articles,
-  conceptNote,
-  organization,
-} from "../data/content";
+import { images, articles, organization } from "../data/content";
 import { usePageMotion } from "../hooks/usePageMotion";
 import { usePageMeta } from "../hooks/usePageMeta";
 
@@ -28,78 +18,7 @@ export default function Home() {
   );
   return (
     <div ref={ref} className="home-page">
-      <section className="hero" aria-labelledby="hero-heading">
-        <Photo
-          src={images.hero}
-          alt="Lush tea plantations and mountain landscapes in Munnar, Kerala"
-          className="hero-image"
-          priority
-        />
-        <div className="hero-shade" />
-        <div className="hero-content">
-          <div className="hero-eyebrow hero-detail">
-            <span className="tiny-sun" aria-hidden="true">
-              ✳
-            </span>
-            <span>Rooted in co-operation</span>
-            <span className="eyebrow-rule" />
-          </div>
-          <h1 id="hero-heading">
-            <span className="hero-line">
-              <span>Growing Together.</span>
-            </span>
-            <span className="hero-line">
-              <span>
-                <em>Beyond Boundaries.</em>
-              </span>
-            </span>
-          </h1>
-          <div className="hero-lower hero-detail">
-            <p>
-              Advancing dairy development, supporting farming
-              <br className="desktop-break" /> communities, and shaping a more
-              sustainable future
-              <br className="desktop-break" /> through collective progress.
-            </p>
-            <div className="hero-actions">
-              <ArrowLink to="/activities" variant="light">
-                Explore our world
-              </ArrowLink>
-              <Link to="/#who-we-are" className="hero-secondary">
-                Discover our purpose <ArrowDown size={15} />
-              </Link>
-            </div>
-          </div>
-        </div>
-        <div className="hero-bottom hero-detail">
-          <Link to="/#who-we-are" className="scroll-cue">
-            <span className="scroll-cue-circle">
-              <MoveDown size={17} strokeWidth={1.2} />
-            </span>
-            <span>Scroll to discover</span>
-          </Link>
-          <span className="hero-location">
-            Rooted in the land.
-            <br />
-            <span>Kerala & Tamil Nadu, India</span>
-          </span>
-          <div className="hero-side-note">
-            <span className="hero-side-line" />
-            <span>
-              A collective vision
-              <br />
-              for a better tomorrow
-            </span>
-          </div>
-        </div>
-      </section>
-      <div className="hero-footnote">
-        <span>{organization}</span>
-        <span>
-          A shared purpose. A wider horizon.
-          <span className="footnote-plus">+</span>
-        </span>
-      </div>
+      <HeroSection />
 
       <section id="who-we-are" className="intro-section section-pad">
         <div className="intro-label">
@@ -111,13 +30,13 @@ export default function Home() {
           </span>
         </div>
         <div className="intro-main">
-          <h2 data-reveal>
-            Progress begins
-            <br />
-            when we grow
-            <br />
-            <em>together.</em>
-          </h2>
+          <RevealHeading
+            lines={[
+              { text: "Progress begins" },
+              { text: "when we grow" },
+              { text: "together.", emphasis: true },
+            ]}
+          />
           <div className="intro-bottom">
             <Photo
               src={images.landscape}
@@ -144,8 +63,8 @@ export default function Home() {
       <section className="purpose-section">
         <div className="purpose-photo-wrap" data-image-reveal>
           <Photo
-            src={images.farmer}
-            alt="Farm workers tending to their crops together"
+            src={images.people}
+            alt="An Indian farmer tending a field in soft evening light"
             className="purpose-photo"
             parallax
           />
@@ -155,11 +74,12 @@ export default function Home() {
         </div>
         <div className="purpose-content">
           <Eyebrow light>Our core purpose</Eyebrow>
-          <h2 data-reveal>
-            Rooted in people.
-            <br />
-            <em>Driven by purpose.</em>
-          </h2>
+          <RevealHeading
+            lines={[
+              { text: "Rooted in people." },
+              { text: "Driven by purpose.", emphasis: true },
+            ]}
+          />
           <p data-reveal>
             Our focus extends beyond dairy. It is about the lives connected to
             it: the farmers, their animals, the land, and the communities that
@@ -189,7 +109,6 @@ export default function Home() {
                   <h3>{value.title}</h3>
                   <p>{value.text}</p>
                 </div>
-                <ChevronRight size={16} />
               </div>
             ))}
           </div>
@@ -212,52 +131,28 @@ export default function Home() {
           <span>Looking beyond today</span>
           <Leaf size={24} strokeWidth={1} />
         </div>
-        <h2 data-reveal>
-          Building possibilities
-          <br />
-          <em>for generations.</em>
-        </h2>
+        <RevealHeading
+          lines={[
+            { text: "Building possibilities" },
+            { text: "for generations.", emphasis: true },
+          ]}
+        />
         <span className="interlude-bottom">
           The land connects us. Our purpose moves us forward.
         </span>
       </section>
 
-      <section className="projects-section section-pad">
-        <div className="section-heading">
-          <div>
-            <Eyebrow>03 / Our initiatives</Eyebrow>
-            <h2 data-reveal>
-              Ideas for a<br />
-              <em>better tomorrow.</em>
-            </h2>
-          </div>
-          <div className="section-heading-aside" data-reveal>
-            <p>
-              Exploring opportunities across dairy, agriculture, animal welfare,
-              and sustainable rural development.
-            </p>
-            <ArrowLink to="/projects">All proposed initiatives</ArrowLink>
-          </div>
-        </div>
-        <div className="projects-grid">
-          {projects.map((p, i) => (
-            <ProjectCard key={p.id} project={p} index={i} />
-          ))}
-        </div>
-        <p className="project-disclaimer">
-          <span className="label-dot" />
-          {conceptNote}
-        </p>
-      </section>
+      <FeaturedProjects />
 
       <section className="animal-section">
         <div className="animal-story">
           <Eyebrow light>04 / Animal wellbeing</Eyebrow>
-          <h2 data-reveal>
-            Care beyond
-            <br />
-            <em>the farm.</em>
-          </h2>
+          <RevealHeading
+            lines={[
+              { text: "Care beyond" },
+              { text: "the farm.", emphasis: true },
+            ]}
+          />
           <p data-reveal>
             From animal health to responsible breeding support, better livestock
             care is an important part of sustainable dairy development.
@@ -296,24 +191,22 @@ export default function Home() {
       <section className="sustainability-section section-pad">
         <div className="sustainability-heading">
           <Eyebrow>Innovation & sustainability</Eyebrow>
-          <h2 data-reveal>
-            Thinking forward.
-            <br />
-            <em>Growing responsibly.</em>
-          </h2>
+          <RevealHeading
+            lines={[
+              { text: "Thinking forward." },
+              { text: "Growing responsibly.", emphasis: true },
+            ]}
+          />
         </div>
         <div className="sustainability-grid">
           <div className="sustainability-visual" data-image-reveal>
             <Photo
-              src={images.harvest}
-              alt="Fresh, green crops connecting farming and responsible resource use"
+              src={images.resources}
+              alt="A tree standing above green tea gardens and layered hills in Munnar"
             />
-            <div className="sustainability-badge">
-              <Leaf size={22} strokeWidth={1.2} />
-              <span>
-                Small decisions.
-                <br />A longer view.
-              </span>
+            <div className="resource-caption">
+              <span>01 / The land we share</span>
+              <span>A longer view. ↗</span>
             </div>
           </div>
           <div className="sustainability-copy" data-reveal>
@@ -347,11 +240,12 @@ export default function Home() {
           <span>Many voices. One shared direction.</span>
         </div>
         <div className="membership-main">
-          <h2 data-reveal>
-            Stronger
-            <br />
-            <em>together.</em>
-          </h2>
+          <RevealHeading
+            lines={[
+              { text: "Stronger" },
+              { text: "together.", emphasis: true },
+            ]}
+          />
           <div className="membership-copy" data-reveal>
             <p>
               Co-operation begins with participation. Learn about the society’s
@@ -373,11 +267,12 @@ export default function Home() {
         <div className="section-heading">
           <div>
             <Eyebrow>07 / News & insights</Eyebrow>
-            <h2 data-reveal>
-              Perspectives from
-              <br />
-              <em>our world.</em>
-            </h2>
+            <RevealHeading
+              lines={[
+                { text: "Perspectives from" },
+                { text: "our world.", emphasis: true },
+              ]}
+            />
           </div>
           <ArrowLink to="/news">Visit the journal</ArrowLink>
         </div>

@@ -1,71 +1,70 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Plus, Minus, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { activities } from "../../data/content";
 import { Eyebrow, Photo } from "../ui/Elements";
+import { RevealHeading } from "../ui/RevealHeading";
 
 export default function ActivityShowcase() {
   const [active, setActive] = useState(0);
-  const root = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (!window.matchMedia("(min-width: 900px)").matches) return;
-        entries.forEach((entry) => {
-          if (entry.isIntersecting)
-            setActive(
-              Number((entry.target as HTMLElement).dataset.activityIndex),
-            );
-        });
-      },
-      { rootMargin: "-30% 0px -45% 0px", threshold: 0 },
-    );
-    root.current
-      ?.querySelectorAll("[data-activity-index]")
-      .forEach((item) => observer.observe(item));
-    return () => observer.disconnect();
-  }, []);
+  const activity = activities[active];
   return (
-    <section className="activities-section section-pad" ref={root}>
+    <section
+      className="activities-section section-pad activity-editorial"
+      aria-labelledby="activities-heading"
+    >
       <div className="section-heading">
         <div>
           <Eyebrow>02 / What we do</Eyebrow>
-          <h2 data-reveal>
-            Different fields.
-            <br />
-            <em>One shared future.</em>
-          </h2>
+          <RevealHeading
+            id="activities-heading"
+            lines={[
+              { text: "Different fields." },
+              { text: "One shared future.", emphasis: true },
+            ]}
+          />
         </div>
-        <p className="section-heading-aside" data-reveal>
-          Connected by purpose.
-          <br />
-          Working towards possibilities
-          <br />
-          across the rural landscape.
-        </p>
+        <div className="section-heading-aside">
+          <span className="field-count">
+            06{" "}
+            <span>
+              connected areas
+              <br />
+              of shared ambition
+            </span>
+          </span>
+          <p>Choose a field. Explore the wider perspective.</p>
+        </div>
       </div>
       <div className="activity-showcase">
         <div className="activity-visual">
           <div className="activity-visual-inner">
-            {activities.map((a, i) => (
-              <div
-                key={a.id}
-                className={`activity-slide ${i === active ? "is-active" : ""}`}
-                aria-hidden={i !== active}
-              >
-                <Photo src={a.image} alt={a.alt} />
-              </div>
-            ))}
+            <div className="activity-selected-image" key={activity.id}>
+              <Photo
+                src={activity.image}
+                alt={activity.alt}
+                position={activity.imagePosition}
+                sizes="(min-width: 900px) 48vw, 100vw"
+              />
+            </div>
             <div className="activity-visual-overlay">
               <span>Our areas of focus</span>
               <span className="activity-big-number">
-                0{active + 1}
+                {activity.number}
                 <span>/ 06</span>
               </span>
-              <p>{activities[active].summary}</p>
+              <p>{activity.summary}</p>
             </div>
             <div className="activity-image-label">
-              A connected approach to development <ArrowUpRight size={16} />
+              <span>{activity.shortTitle}</span>
+              <span className="activity-steps" aria-hidden="true">
+                {activities.map((a, i) => (
+                  <span
+                    key={a.id}
+                    className={i === active ? "is-active" : ""}
+                  />
+                ))}
+              </span>
             </div>
           </div>
         </div>
@@ -74,10 +73,10 @@ export default function ActivityShowcase() {
             <article
               key={a.id}
               className={`activity-item ${active === i ? "is-active" : ""}`}
-              data-activity-index={i}
             >
               <h3>
                 <button
+                  id={`activity-trigger-${a.id}`}
                   className="activity-trigger"
                   onClick={() => setActive(i)}
                   aria-expanded={active === i}
@@ -85,7 +84,7 @@ export default function ActivityShowcase() {
                 >
                   <span className="activity-index">{a.number}</span>
                   <span className="activity-title">{a.title}</span>
-                  <span className="activity-toggle">
+                  <span className="activity-toggle" aria-hidden="true">
                     {active === i ? <Minus size={17} /> : <Plus size={17} />}
                   </span>
                 </button>
@@ -94,15 +93,20 @@ export default function ActivityShowcase() {
                 id={`activity-body-${a.id}`}
                 className="activity-body"
                 hidden={active !== i}
+                role="region"
+                aria-labelledby={`activity-trigger-${a.id}`}
               >
                 <Photo
                   src={a.image}
                   alt={a.alt}
+                  position={a.imagePosition}
                   className="activity-mobile-image"
+                  sizes="(max-width:899px) 90vw, 1px"
                 />
                 <p>{a.summary}</p>
                 <Link to={`/activities/${a.id}`} className="text-link">
-                  Discover this field <ArrowUpRight size={16} />
+                  Discover this field{" "}
+                  <ArrowUpRight size={16} aria-hidden="true" />
                 </Link>
               </div>
             </article>
@@ -112,7 +116,8 @@ export default function ActivityShowcase() {
             operational status are subject to confirmation.
           </p>
           <Link className="text-link" to="/activities">
-            Explore all our activities <ArrowUpRight size={17} />
+            Explore all our activities{" "}
+            <ArrowUpRight size={17} aria-hidden="true" />
           </Link>
         </div>
       </div>

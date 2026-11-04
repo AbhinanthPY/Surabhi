@@ -1231,7 +1231,7 @@ section[id] {
 .news-card h3 a:hover {
   color: #60804c;
 }
-.project-card > p {
+.project-card-copy > p {
   font-size: 11px;
   line-height: 1.9;
   max-width: 360px;
@@ -2910,7 +2910,7 @@ section[id] {
   .activity-body > p {
     font-size: 13px;
   }
-  .project-card > p {
+  .project-card-copy > p {
     font-size: 13px;
   }
   .news-card > p {
@@ -3465,7 +3465,7 @@ section[id] {
     font-size: 6px;
     gap: 8px;
   }
-  .project-card > p {
+  .project-card-copy > p {
     font-size: 11px;
   }
   .animal-section {
@@ -4198,7 +4198,7 @@ section[id] {
     margin-top: 17px;
     margin-bottom: 10px;
   }
-  .project-card > p {
+  .project-card-copy > p {
     font-size: 11px;
     max-width: 350px;
     line-height: 1.9;
@@ -5296,7 +5296,7 @@ section[id] {
 .intro-copy p,
 .purpose-content > p,
 .section-heading-aside,
-.project-card > p,
+.project-card-copy > p,
 .animal-story > p,
 .sustainability-copy > p:not(.large-body),
 .membership-copy > p,
@@ -5405,7 +5405,7 @@ section[id] {
   .intro-copy p,
   .purpose-content > p,
   .section-heading-aside,
-  .project-card > p,
+  .project-card-copy > p,
   .animal-story > p,
   .sustainability-copy > p:not(.large-body),
   .membership-copy > p,

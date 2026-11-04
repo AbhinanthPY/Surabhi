@@ -20,3 +20,11 @@ Stock license references: [Pexels license](https://www.pexels.com/license/), [Un
 Fonts: [Manrope](https://github.com/google/fonts/tree/main/ofl/manrope), [Instrument Serif](https://github.com/google/fonts/tree/main/ofl/instrumentserif). SIL Open Font License copies are in `public/assets/fonts/`.
 
 Design references, used for principles only: [Floema](https://floema.com/en/about), [Farm Minerals](https://www.farmminerals.com/), [Vantara](https://vantara.in/en/about-us). No reference-site code, proprietary images, branding, or animation sequence was copied.
+
+## Editorial refinement assets
+
+- `cinematic` and `cinematic-mobile`: [Misty Tea Plantations at Sunrise — Akhil Saji, Pexels](https://www.pexels.com/photo/scenic-view-of-misty-tea-plantations-at-sunrise-33361362/). Separate landscape and portrait crops keep the horizon intentional on each screen.
+- `resources`: [Scenic View of Lush Tea Plantations in Munnar — Pexels](https://www.pexels.com/photo/scenic-view-of-lush-tea-plantations-in-munnar-30169270/).
+- `people`: [Indian Female Farmer Working in Field at Sunset — Votso Sothu, Pexels](https://www.pexels.com/photo/indian-female-farmer-working-in-field-at-sunset-35635150/). This is illustrative Indian farming photography, not a verified Surabhi member or location.
+
+The earlier hero assets remain available for replacement and comparison. All new photographs are local, with WebP, JPEG fallback, mobile variants, and recorded intrinsic dimensions.

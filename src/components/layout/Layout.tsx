@@ -57,7 +57,8 @@ export default function Layout() {
       frame = window.requestAnimationFrame(() => {
         if (smoothScroll.current) {
           smoothScroll.current.resize();
-          smoothScroll.current.scrollTo(target, { offset: -100, force: true });
+          // Lenis already respects the document's scroll-padding-top.
+          smoothScroll.current.scrollTo(target, { offset: 0, force: true });
         } else
           window.scrollTo({
             top: window.scrollY + target.getBoundingClientRect().top - 100,

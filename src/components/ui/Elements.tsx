@@ -1,6 +1,8 @@
 import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
+import { imageDimensions } from "../../data/imageDimensions";
+import { RevealHeading } from "./RevealHeading";
 import type { Article, Project } from "../../types/content";
 
 export function Eyebrow({
@@ -31,11 +33,22 @@ export function ArrowLink({
   return (
     <Link to={to} className={`arrow-link arrow-link-${variant} ${className}`}>
       <span>{children}</span>
-      <span className="link-arrow">
+      <span className="link-arrow" aria-hidden="true">
         <ArrowUpRight size={17} strokeWidth={1.5} />
+        <ArrowUpRight className="arrow-echo" size={17} strokeWidth={1.5} />
       </span>
     </Link>
   );
+}
+interface PhotoProps {
+  src: string;
+  alt: string;
+  className?: string;
+  priority?: boolean;
+  parallax?: boolean;
+  position?: string;
+  sizes?: string;
+  mobileSrc?: string;
 }
 export function Photo({
   src,
@@ -43,14 +56,18 @@ export function Photo({
   className = "",
   priority = false,
   parallax = false,
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-  priority?: boolean;
-  parallax?: boolean;
-}) {
-  const [failed, setFailed] = useState(false);
+  position,
+  sizes = "(max-width: 899px) 100vw, 50vw",
+  mobileSrc,
+}: PhotoProps) {
+  const [failedSource, setFailedSource] = useState<string | null>(null);
+  const [fallbackSource, setFallbackSource] = useState<string | null>(null);
+  const failed = failedSource === src;
+  const originalOnly = fallbackSource === src;
+  const dimensions = imageDimensions[src];
+  const responsive = !!dimensions && !originalOnly;
+  const webp = src.replace(/\.jpg$/, ".webp");
+  const small = src.replace(/\.jpg$/, "-small");
   return (
     <div
       className={`photo ${className} ${failed ? "photo-failed" : ""}`}
@@ -59,41 +76,47 @@ export function Photo({
     >
       {!failed && (
         <picture>
-          {src.endsWith("/hero.jpg") && (
+          {responsive && (
             <>
+              {mobileSrc && (
+                <>
+                  <source
+                    media="(max-width: 640px)"
+                    type="image/webp"
+                    srcSet={`${mobileSrc}.webp`}
+                  />
+                  <source
+                    media="(max-width: 640px)"
+                    srcSet={`${mobileSrc}.jpg`}
+                  />
+                </>
+              )}
               <source
-                media="(max-width: 640px)"
                 type="image/webp"
-                srcSet="/assets/images/hero-mobile.webp"
-              />
-              <source
-                media="(max-width: 640px)"
-                srcSet="/assets/images/hero-mobile.jpg"
+                srcSet={`${small}.webp ${dimensions.smallWidth}w, ${webp} ${dimensions.width}w`}
+                sizes={sizes}
               />
             </>
           )}
-          <source
-            type="image/webp"
-            srcSet={`${src.replace(".jpg", "-small.webp")} 640w, ${src.replace(".jpg", ".webp")} 1400w`}
-            sizes={
-              className.includes("hero-image")
-                ? "100vw"
-                : "(max-width: 640px) 100vw, (max-width: 1000px) 80vw, 60vw"
-            }
-          />
           <img
             src={src}
-            srcSet={`${src.replace(".jpg", "-small.jpg")} 640w, ${src} 1400w`}
-            sizes={
-              className.includes("hero-image")
-                ? "100vw"
-                : "(max-width: 640px) 100vw, (max-width: 1000px) 80vw, 60vw"
+            srcSet={
+              responsive
+                ? `${small}.jpg ${dimensions.smallWidth}w, ${src} ${dimensions.width}w`
+                : undefined
             }
+            sizes={responsive ? sizes : undefined}
+            width={dimensions?.width}
+            height={dimensions?.height}
             alt={alt}
             loading={priority ? "eager" : "lazy"}
             fetchPriority={priority ? "high" : "auto"}
             decoding="async"
-            onError={() => setFailed(true)}
+            style={position ? { objectPosition: position } : undefined}
+            onError={() => {
+              if (responsive) setFallbackSource(src);
+              else setFailedSource(src);
+            }}
             data-parallax={parallax ? "" : undefined}
           />
         </picture>
@@ -109,32 +132,64 @@ export function Photo({
 export function ProjectCard({
   project,
   index = 0,
+  layout = "default",
 }: {
   project: Project;
   index?: number;
+  layout?: "default" | "feature" | "compact";
 }) {
   return (
-    <article className={`project-card project-card-${index % 2}`} data-reveal>
+    <article
+      className={`project-card project-card-${index % 2} project-layout-${layout}`}
+      data-reveal
+    >
       <Link
         to={`/projects/${project.id}`}
         className="project-image-link"
         aria-label={`Explore ${project.title}`}
       >
-        <Photo src={project.image} alt={project.alt} />
+        <Photo
+          src={project.image}
+          alt={project.alt}
+          position={project.imagePosition}
+          sizes={
+            layout === "feature"
+              ? "(min-width:900px) 65vw, 100vw"
+              : layout === "compact"
+                ? "(min-width:900px) 30vw, 100vw"
+                : undefined
+          }
+        />
         <span className="image-index">/{project.number}</span>
         <span className="image-status">{project.status}</span>
-        <span className="image-open">
+        <span className="image-open" aria-hidden="true">
           <ArrowUpRight size={24} strokeWidth={1.3} />
         </span>
       </Link>
-      <div className="card-meta">
-        <span>{project.category}</span>
-        <span>Project concept</span>
+      <div className="project-card-copy">
+        {layout === "feature" && (
+          <span className="project-ordinal" aria-hidden="true">
+            {project.number}
+          </span>
+        )}
+        <div className="card-meta">
+          <span>{project.category}</span>
+          <span>
+            {project.status === "Development Objective"
+              ? "Organizational objective"
+              : "Project concept"}
+          </span>
+        </div>
+        <h3>
+          <Link to={`/projects/${project.id}`}>{project.title}</Link>
+        </h3>
+        <p>{project.summary}</p>
+        {layout === "feature" && (
+          <ArrowLink to={`/projects/${project.id}`}>
+            Explore the possibility
+          </ArrowLink>
+        )}
       </div>
-      <h3>
-        <Link to={`/projects/${project.id}`}>{project.title}</Link>
-      </h3>
-      <p>{project.summary}</p>
     </article>
   );
 }
@@ -184,15 +239,13 @@ export function PageHero({
     <section className={`page-hero ${image ? "page-hero-with-image" : ""}`}>
       <div className="page-hero-content">
         <Eyebrow>{label}</Eyebrow>
-        <h1 data-reveal>
-          {title}
-          {italic && (
-            <>
-              <br />
-              <em>{italic}</em>
-            </>
-          )}
-        </h1>
+        <RevealHeading
+          as="h1"
+          lines={[
+            { text: title },
+            ...(italic ? [{ text: italic, emphasis: true }] : []),
+          ]}
+        />
         <p className="page-hero-description" data-reveal>
           {description}
         </p>
@@ -202,6 +255,7 @@ export function PageHero({
           src={image}
           alt={imageAlt}
           className="page-hero-image"
+          sizes="100vw"
           priority
         />
       )}

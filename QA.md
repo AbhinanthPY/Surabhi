@@ -37,3 +37,20 @@ Verified on 4 November 2026 during implementation.
 Browser QA used the available desktop browser with responsive viewport overrides, not a physical-device lab. Reduced-motion handling, smooth-scroll cleanup, and image-failure fallback behavior were reviewed in source; system motion settings and forced network failures were not changed during testing. No formal Lighthouse or screen-reader certification is claimed.
 
 The site is an informational demonstration. Official branding, contact information, leadership profiles, exact membership provisions, and original institutional documents remain subject to verified client material, as explained in the README and visible site notices.
+
+## Editorial refinement verification
+
+A second pass refined the existing implementation while retaining its routes, content distinctions, branding behavior, and enquiry workflow.
+
+- All 23 existing content routes were opened at **320px** and **1440px**. Each rendered one H1, with no horizontal page overflow or overflowing masked-heading lines.
+- Homepage, About, Activities, Projects, Membership, and Contact were checked at **768px** tablet width, with no horizontal overflow or clipped heading lines.
+- The **390px** hero and mobile navigation were visually reviewed. Escape closes the menu and returns focus to the menu button without scrolling.
+- Activity selection updates the image and remains stable; only one desktop activity image is rendered.
+- The Rural Tourism filter returns the Farm Tourism card and opens its detail. Searching “animal” returns the animal-healthcare article.
+- An empty enquiry shows four validation errors and focuses the name field. The form's review-only behavior and privacy copy remain intact.
+- The heading reveal utility retains semantic text and accessible heading names. New imagery has local responsive variants and accurate recorded dimensions. Optimized-image failure recovery and reduced-motion behavior were reviewed in source.
+- Fresh warning/error logs were empty during the route pass. No formal Lighthouse, physical-device, or screen-reader certification is claimed.
+
+The production build includes strict TypeScript checking. New homepage art direction is documented in `DESIGN-REVIEW.md`; source credits are in `ASSETS.md`.
+
+- Production smoke checks verified the 390px homepage's portrait image source and no overflow. Selecting Animal Healthcare remained stable after a Page Down action. The production build completed with strict TypeScript checks.

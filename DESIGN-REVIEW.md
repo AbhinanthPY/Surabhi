@@ -1,0 +1,28 @@
+# Surabhi — creative and frontend review
+
+This is an editorial refinement of the existing site, not a replacement application. Its original content, routes, branding safeguards, and demo functionality are retained.
+
+## Reference assessment
+
+The first implementation established a credible forest-green and ivory identity. Its execution was more uniform than the intended direction: the hero was a close, low-depth landscape crop; most sections repeated a left/right composition; headings followed the same sans/italic formula; projects and journal stories relied on conventional repeated cards; and scroll reveals generally applied one fade-and-rise treatment.
+
+- **[Floema](https://floema.com/en/about):** the relevant principle is editorial hierarchy and proportion. The refinement varies typographic scale, indents display baselines, gives the projects an upright serif treatment, and separates quieter supporting copy from large narrative statements.
+- **[Farm Minerals](https://www.farmminerals.com/):** the useful influence is confidence and specificity in agricultural storytelling. Six clear activity choices, a large selected-field visual, and one lead initiative with three differently proportioned supporting photographs make the institution's multiple activities concrete.
+- **[Vantara](https://vantara.in/en/about-us):** the useful influence is photographic atmosphere and care-led storytelling. A misty Munnar horizon, intentional portrait crops, a real farmer image, and a larger animal-care composition give the narrative greater human and environmental depth.
+
+These are critical design judgments, not claims of awards, formal benchmarking, or equivalence with the references. No reference-site imagery, branding, source code, or exact interaction sequence was copied.
+
+## Implemented craft changes
+
+- Separate desktop and mobile hero crops and headline compositions; restrained photographic grading and layered contrast.
+- Reusable semantic masked headings with readable text and predictable line breaks.
+- Different section scales, image ratios, alignments, and spacing, including a featured initiative and a lead journal story.
+- Stable activity selection, a selected-image reveal, and visual position indicators without scroll-driven selection changes.
+- Desktop-only parallax measured against `.photo`, not a `display:contents` picture element; lighter mobile entrances; animated journey progression; batched refreshes and proper cleanup.
+- Refined masthead, active contact state, arrow transitions, staggered mobile navigation, and focus restoration without scrolling.
+- Actual intrinsic image dimensions, accurate responsive descriptors, explicit sizes, selected-image loading, and JPEG recovery before image fallback.
+- A single anchor offset, avoiding compounded document padding, section margins, and Lenis offsets.
+
+## Content integrity
+
+The official logo was still not supplied; the existing marked temporary wordmark and official-asset detection remain. The color identity is retained. Organizational objectives, proposed concepts, demonstration articles, pending leadership and document information, and the non-sending enquiry form keep their original distinctions. No achievements, impact figures, membership provisions, officeholders, or contact channels were invented.

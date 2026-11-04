@@ -49,7 +49,7 @@ src/
   data/           Typed, reusable activities, projects, articles, milestones
   hooks/          Page motion and metadata
   pages/          Homepage, inner pages, detail templates, legal, 404
-  styles/         Design tokens, editorial composition, responsive layouts
+  styles/         Foundation tokens plus scoped editorial refinements
   types/          Content interfaces
 public/
   assets/
@@ -88,3 +88,11 @@ npm audit
 ```
 
 See [QA.md](./QA.md) for the verified browser scenarios and any practical verification limits. This is a static presentation site; the enquiry form has no delivery or persistence endpoint.
+
+## Editorial refinement
+
+The refinement preserves the existing content model, official-logo handling, all routes, and the local-only enquiry flow. `HeroSection`, `FeaturedProjects`, and `RevealHeading` separate photographic art direction and masked typography from page content. `styles/editorial.css` defines the new compositions; `global.css` remains the shared foundation for the existing inner pages.
+
+Activity selection is now visitor-controlled, avoiding scroll-driven accordion changes and loading only the selected desktop photograph. `Photo` accepts per-composition crops, explicit responsive sizes, and mobile sources. `imageDimensions.ts` records actual widths so source descriptors and intrinsic image dimensions are accurate. A failed optimized source retries the original JPEG before showing the accessible visual fallback.
+
+GSAP masks heading lines, varies image and text entrances, uses the actual photograph container for parallax, batches refreshes, disables parallax on smaller screens, and retains full reduced-motion support. Navigation scroll work is scheduled once per animation frame. See `DESIGN-REVIEW.md` for the design assessment and `QA.md` for the verification record.

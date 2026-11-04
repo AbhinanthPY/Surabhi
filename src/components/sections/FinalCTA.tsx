@@ -1,4 +1,5 @@
 import { ArrowLink, Eyebrow } from "../ui/Elements";
+import { RevealHeading } from "../ui/RevealHeading";
 export default function FinalCTA() {
   return (
     <section className="final-cta">
@@ -7,11 +8,12 @@ export default function FinalCTA() {
         <span>People. Purpose. Possibility.</span>
       </div>
       <div className="cta-main">
-        <h2 data-reveal>
-          The future
-          <br />
-          <em>grows together.</em>
-        </h2>
+        <RevealHeading
+          lines={[
+            { text: "The future" },
+            { text: "grows together.", emphasis: true },
+          ]}
+        />
         <div className="cta-copy" data-reveal>
           <p>
             Discover the possibilities of co-operation, innovation, and

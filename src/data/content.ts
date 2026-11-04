@@ -5,7 +5,9 @@ export const organization =
 export const conceptNote =
   "Conceptual project information presented for demonstration purposes. Details are subject to confirmation and applicable approvals.";
 export const images = {
-  hero: "/assets/images/hero.jpg",
+  hero: "/assets/images/cinematic.jpg",
+  resources: "/assets/images/resources.jpg",
+  people: "/assets/images/people.jpg",
   landscape: "/assets/images/landscape.jpg",
   hills: "/assets/images/hills.jpg",
   cattle: "/assets/images/cattle.jpg",
@@ -56,8 +58,9 @@ export const activities: Activity[] = [
     number: "03",
     title: "Farmer Welfare & Training",
     shortTitle: "Farmer welfare",
-    image: images.farmer,
-    alt: "People working together in a cultivated agricultural field",
+    image: images.people,
+    imagePosition: "50% 46%",
+    alt: "An Indian farmer working in a field in warm evening light",
     summary:
       "Knowledge, opportunity, and a shared voice for farming communities.",
     description:
@@ -74,6 +77,7 @@ export const activities: Activity[] = [
     title: "Animal Healthcare",
     shortTitle: "Animal healthcare",
     image: images.cattle,
+    imagePosition: "60% 48%",
     alt: "A close view of a dairy cow in a natural setting",
     summary: "Healthy animals. More resilient farms. A shared responsibility.",
     description:
@@ -106,6 +110,7 @@ export const activities: Activity[] = [
     title: "Research & Innovation",
     shortTitle: "Research & innovation",
     image: images.hills,
+    imagePosition: "45% 58%",
     alt: "Green agricultural hills in Kerala",
     summary: "Bringing thoughtful ideas closer to everyday farming.",
     description:
@@ -125,6 +130,7 @@ export const projects: Project[] = [
     category: "Renewable Energy",
     status: "Concept / Proposed",
     image: images.biogas,
+    imagePosition: "50% 60%",
     alt: "A farmer caring for calves near a rural biogas installation in India, illustrative stock photography",
     summary:
       "Exploring responsible ways to turn agricultural and organic resources into renewable energy.",
@@ -143,6 +149,7 @@ export const projects: Project[] = [
     category: "Rural Tourism",
     status: "Concept / Proposed",
     image: images.hills,
+    imagePosition: "45% 58%",
     alt: "Misty tea gardens and rural landscapes in Kerala",
     summary:
       "Envisioning experiences that connect people with rural traditions, agricultural landscapes, and farm life.",
@@ -161,6 +168,7 @@ export const projects: Project[] = [
     category: "Animal Welfare",
     status: "Proposed Initiative",
     image: images.cattle,
+    imagePosition: "60% 48%",
     alt: "A dairy cow outdoors, illustrating the animal-care focus",
     summary:
       "Exploring accessible animal healthcare infrastructure and rural veterinary services.",
@@ -221,6 +229,7 @@ export const articles: Article[] = [
     title: "The Importance of Animal Healthcare",
     category: "Animal Welfare",
     image: images.cattle,
+    imagePosition: "60% 48%",
     alt: "A cow in a farm setting",
     excerpt:
       "Why animal welfare belongs at the heart of the conversation about dairy development.",
