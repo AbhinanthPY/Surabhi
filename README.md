@@ -50,4 +50,4 @@ The existing private Sites identity remains in `.openai/hosting.json` with `stat
 
 Activities remain organizational objectives; proposed projects remain concepts subject to confirmation; articles remain demonstration content. No unverified achievements, impact statistics, officeholders, contact details or membership rules were added. The registration milestone remains attributed to the client brief. The original supplied logo is retained unchanged at `site/assets/surabhi-logo.png`; the site displays its transparent derivative.
 
-See `ASSETS.md`, `THIRD-PARTY.md` and `QA.md` for asset provenance, dependency notices and validation. The prior React source is retained in Git history and in the adjacent `surabhi-react-backup.zip` archive; it is not needed to run or build this static version.
+See `ASSETS.md`, `THIRD-PARTY.md` and `QA.md` for asset provenance, dependency notices and validation. Future development uses the HTML, CSS and JavaScript in `site/` exclusively. The obsolete React backup and dependency folder have been removed.
