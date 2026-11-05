@@ -17,7 +17,7 @@ All photography is illustrative stock material. It does not identify an operatin
 
 Stock license references: [Pexels license](https://www.pexels.com/license/), [Unsplash license](https://unsplash.com/license).
 
-Fonts: [Manrope](https://github.com/google/fonts/tree/main/ofl/manrope), [Instrument Serif](https://github.com/google/fonts/tree/main/ofl/instrumentserif). SIL Open Font License copies are in `public/assets/fonts/`.
+Fonts: [Manrope](https://github.com/google/fonts/tree/main/ofl/manrope), [Instrument Serif](https://github.com/google/fonts/tree/main/ofl/instrumentserif). SIL Open Font License copies are in `site/assets/fonts/`.
 
 Design references, used for principles only: [Floema](https://floema.com/en/about), [Farm Minerals](https://www.farmminerals.com/), [Vantara](https://vantara.in/en/about-us). No reference-site code, proprietary images, branding, or animation sequence was copied.
 
@@ -31,11 +31,11 @@ The earlier hero assets remain available for replacement and comparison. All new
 
 ## Official Surabhi logo
 
-`public/assets/surabhi-logo.png` is the user-supplied official logo (1377 × 1048 PNG). It is retained byte-for-byte from the supplied attachment, including its original green, black and white canvas. The website now displays the transparent derivative described below.
+`site/assets/surabhi-logo.png` is the user-supplied official logo (1377 × 1048 PNG). It is retained byte-for-byte from the supplied attachment, including its original green, black and white canvas. The website now displays the transparent derivative described below.
 
 ## Transparent navigation logo
 
-`public/assets/surabhi-logo-transparent.png` is a PNG with actual alpha transparency, created from the supplied logo using built-in ImageGen background extraction. The original supplied file remains unchanged. White-on-dark treatment and the original green-and-black colors on light surfaces are controlled with CSS, and the compact navigation uses a smaller width.
+`site/assets/surabhi-logo-transparent.png` is a PNG with actual alpha transparency, created from the supplied logo using built-in ImageGen background extraction. The original supplied file remains unchanged. White-on-dark treatment and the original green-and-black colors on light surfaces are controlled with CSS, and the compact navigation uses a smaller width.
 
 Final built-in ImageGen edit prompt:
 

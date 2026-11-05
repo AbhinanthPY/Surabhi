@@ -26,3 +26,7 @@ These are critical design judgments, not claims of awards, formal benchmarking, 
 ## Content integrity
 
 The official logo was supplied after the editorial refinement and now replaces the temporary wordmark in the header, mobile menu, and footer. The supplied image is preserved unchanged in the assets folder. A transparent derivative now supports the requested white hero logo and smaller original green-and-black logo on light navigation surfaces. Organizational objectives, proposed concepts, demonstration articles, pending leadership and document information, and the non-sending enquiry form keep their original distinctions. No achievements, impact figures, membership provisions, officeholders, or contact channels were invented.
+
+## Static implementation — 5 November 2026
+
+All page content is now stored as complete HTML documents in `site/`. The visual system is ordinary, readable CSS. Plain JavaScript owns interactive behavior, with local GSAP/ScrollTrigger and Lenis enhancements. The six-field pinned story, branding, responsive layouts and content distinctions are retained. Native page navigation replaces the former client router; there is no hydration or framework runtime.

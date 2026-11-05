@@ -1,0 +1,10 @@
+import { cp, mkdir, readdir, rm } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+const root = fileURLToPath(new URL('../', import.meta.url));
+const source = path.join(root, 'site');
+const output = path.join(root, 'dist');
+await rm(output, {recursive:true, force:true});
+await mkdir(output, {recursive:true});
+for (const name of await readdir(source)) await cp(path.join(source,name),path.join(output,name),{recursive:true});
+console.log('Built static HTML, CSS and JavaScript in dist/.');
