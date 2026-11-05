@@ -17,10 +17,10 @@ These are critical design judgments, not claims of awards, formal benchmarking, 
 - Separate desktop and mobile hero crops and headline compositions; restrained photographic grading and layered contrast.
 - Reusable semantic masked headings with readable text and predictable line breaks.
 - Different section scales, image ratios, alignments, and spacing, including a featured initiative and a lead journal story.
-- Stable activity selection, a selected-image reveal, and visual position indicators without scroll-driven selection changes.
+- Six activity chapters advance with scrolling inside a pinned stage, with image crossfades, synchronized details, direct-selection controls and a skip link. Short screens and reduced-motion readers retain the accordion.
 - Desktop-only parallax measured against `.photo`, not a `display:contents` picture element; lighter mobile entrances; animated journey progression; batched refreshes and proper cleanup.
 - Refined masthead, active contact state, arrow transitions, staggered mobile navigation, and focus restoration without scrolling.
-- Actual intrinsic image dimensions, accurate responsive descriptors, explicit sizes, selected-image loading, and JPEG recovery before image fallback.
+- Actual intrinsic image dimensions, accurate responsive descriptors, explicit sizes, lazy-loaded activity layers, and JPEG recovery before image fallback.
 - A single anchor offset, avoiding compounded document padding, section margins, and Lenis offsets.
 
 ## Content integrity

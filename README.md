@@ -33,7 +33,7 @@ The private Sites deployment configuration is in `.openai/hosting.json`; retain 
 
 - All 13 homepage sections: cinematic hero; editorial introduction; purpose; activity explorer; visual interlude; four projects; animal-care story; sustainability; journey; membership; three journal cards; closing CTA; institutional footer.
 - About, activities, six activity details, projects, four project details, membership, leadership and governance, journal, three article details, contact, privacy, legal notice, and a not-found page.
-- Scroll-aware floating navigation, native-dialog mobile menu with focus containment and Escape support, activity accordion and changing imagery, category filters, article search and empty-state recovery, membership disclosures, related content, and back-to-top.
+- Scroll-aware floating navigation, native-dialog mobile menu with focus containment and Escape support, six-field pinned scroll story with manual selection and an accordion fallback, category filters, article search and empty-state recovery, membership disclosures, related content, and back-to-top.
 - Client-side enquiry validation, accessible field errors, local review, clipboard copy, and clearing. **Nothing is sent, emailed, or stored.** No localStorage or analytics are used.
 - GSAP entrance and scroll reveals, image masking, subtle desktop parallax, sticky visual narratives, hover effects, and Lenis on fine-pointer devices. Animation and smooth-scrolling setup clean up on unmount and honor reduced-motion preferences.
 - Local fonts; local JPG fallbacks, optimized WebP sources, and 640px mobile variants; lazy-loaded secondary imagery; route-based code splitting; responsive layouts; keyboard focus styles; titles and descriptions.
@@ -96,3 +96,7 @@ The refinement preserves the existing content model, official-logo handling, all
 Activity selection is now visitor-controlled, avoiding scroll-driven accordion changes and loading only the selected desktop photograph. `Photo` accepts per-composition crops, explicit responsive sizes, and mobile sources. `imageDimensions.ts` records actual widths so source descriptors and intrinsic image dimensions are accurate. A failed optimized source retries the original JPEG before showing the accessible visual fallback.
 
 GSAP masks heading lines, varies image and text entrances, uses the actual photograph container for parallax, batches refreshes, disables parallax on smaller screens, and retains full reduced-motion support. Navigation scroll work is scheduled once per animation frame. See `DESIGN-REVIEW.md` for the design assessment and `QA.md` for the verification record.
+
+### Activity scroll sequence
+
+The homepage activity stage pins below the navigation while normal scrolling advances through all six fields, then releases into the next section. Reverse scrolling reverses the sequence. Step buttons and field headings can seek directly; “Continue below” skips the sequence. Mobile uses one image and one field at a time. Reduced-motion preferences and viewports shorter than 620px retain the ordinary accordion. The GSAP media context removes the pin when leaving the page or disabling the enhancement.

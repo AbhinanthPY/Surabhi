@@ -71,3 +71,13 @@ The supplied 1377 × 1048 PNG replaces the temporary wordmark in the shared head
 ## Original-color light navbar — 4 November 2026
 
 The light navbar now shows the transparent logo in its original green and black colors, with no monochrome filter. The hero remains white. Verified both states in the browser at the user's 625px viewport; the scrolled logo loads correctly at 78px CSS width. Production build passes. Proof: `screenshots/original-color-navbar.png`.
+
+## Six-field pinned activity story — 5 November 2026
+
+- At 946 × 781, natural scrolling advanced in order through Dairy Development, Milk Processing & Distribution, Farmer Welfare & Training, Animal Healthcare, Animal Nutrition & Feed, and Research & Innovation. The stage stayed at 110px from the top while its image and details changed.
+- Reverse scrolling returned to Animal Nutrition & Feed. Further downward scrolling after the sixth interval released the stage and revealed the visual interlude.
+- At 390 × 844, the compact stage stayed at 94px; scrolling advanced through the first three fields. The sixth-field button sought correctly, all six images loaded, and “Continue below” moved to the note under the stage.
+- At 390 × 580 the pin was removed and the normal accordion opened Animal Healthcare. No horizontal overflow observed.
+- The detail link opened `/activities/animal-healthcare`; no pin spacers remained on that route. Returning home created exactly one spacer.
+- No browser errors or warnings observed. Production build passed. Reduced-motion fallback is configured by a media query; the operating-system motion preference was not changed during testing.
+- Proof: `screenshots/activity-scroll-desktop.png` and `screenshots/activity-scroll-mobile.png`.

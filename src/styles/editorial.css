@@ -423,7 +423,7 @@ h3 {
   right: 20px;
 }
 
-/* Stable, visitor-controlled activity selection. Only the selected desktop image loads. */
+/* Activity presentation; the scroll enhancement below keeps this accordion as fallback. */
 .activity-editorial .section-heading {
   align-items: flex-end;
 }
@@ -2007,4 +2007,81 @@ section[id] {
 @media (max-width: 359px) {
   .brand-footer.brand-official { width: 130px; }
   .brand-footer.brand-official img { width: 128px; }
+}
+
+/* Six scroll chapters share one pinned composition. No wheel/touch interception. */
+.activity-scroll-hint,
+.activity-scroll-navigation { display: none; }
+.activity-end { margin-top: 32px; display: flex; gap: 40px; align-items: flex-start; justify-content: space-between; }
+.activity-end .activity-note { max-width: 560px; margin: 0; }
+.activity-end > .text-link { flex-shrink: 0; font-size: 11px; margin-top: 20px; }
+.activity-slide { pointer-events: none; }
+.activity-slide.is-active { z-index: 1; }
+.activity-visual-inner::after { z-index: 2; }
+.activity-editorial .activity-visual-overlay { z-index: 3; }
+.activity-editorial .activity-image-label { z-index: 3; }
+.activity-scroll-enabled .activity-manual-hint { display: none; }
+.activity-scroll-enabled .activity-scroll-hint { display: block; }
+.activity-scroll-enabled .activity-scroll-stage {
+  height: min(760px, calc(100svh - 140px));
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: var(--ivory);
+}
+.activity-scroll-enabled .activity-scroll-navigation { display: flex; align-items: center; gap: 24px; min-height: 40px; }
+.activity-scroll-cue, .activity-skip { font-size: 10px; letter-spacing: .04em; }
+.activity-scroll-cue > span { margin-left: 10px; }
+.activity-skip { margin-left: auto; }
+.activity-scroll-steps { display: flex; gap: 8px; }
+.activity-scroll-steps button {
+  min-height: 40px;
+  width: 40px;
+  border-bottom: 2px solid var(--line);
+  color: var(--muted);
+  font-size: 10px;
+  transition: border-color .3s, color .3s;
+}
+.activity-scroll-steps button[aria-pressed="true"] { border-color: var(--forest); color: var(--forest); }
+.activity-scroll-enabled .activity-showcase { flex: 1; min-height: 0; gap: clamp(28px, 5vw, 80px); }
+.activity-scroll-enabled .activity-visual { display: block; position: relative; top: auto; height: 100%; min-height: 0; }
+.activity-scroll-enabled .activity-list { display: flex; flex-direction: column; height: 100%; justify-content: center; min-width: 0; }
+.activity-scroll-enabled .activity-item { padding-bottom: 0; }
+.activity-scroll-enabled .activity-trigger { min-height: 55px; padding: 12px 0; gap: 16px; }
+.activity-scroll-enabled .activity-title { font-size: clamp(19px, 1.85vw, 29px); max-width: none; }
+.activity-scroll-enabled .activity-item.is-active .activity-title { font-size: clamp(29px, 2.6vw, 42px); }
+.activity-scroll-enabled .activity-index { padding-top: 4px; }
+.activity-scroll-enabled .activity-body { padding: 0 20px 14px 31px; }
+.activity-scroll-enabled .activity-body > p { font-size: 12px; line-height: 1.7; margin: 0 0 12px; }
+.activity-scroll-enabled .activity-mobile-image { display: none; }
+.activity-scroll-enabled .activity-big-number { font-size: clamp(90px, 13svh, 145px); }
+.activity-scroll-enabled .activity-visual-overlay > p { font-size: clamp(14px, 1.45vw, 18px); }
+.activity-scroll-enabled .activity-visual-overlay { animation: field-copy .45s var(--ease) both; }
+@keyframes field-copy { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 899px) {
+  .activity-scroll-enabled .activity-scroll-stage { height: calc(100svh - 124px); gap: 14px; }
+  .activity-scroll-enabled .activity-scroll-navigation { flex-wrap: wrap; gap: 0 18px; }
+  .activity-scroll-enabled .activity-scroll-cue { flex: 1; }
+  .activity-scroll-enabled .activity-scroll-steps { order: 3; width: 100%; gap: 9px; }
+  .activity-scroll-enabled .activity-scroll-steps button { flex: 1; }
+  .activity-scroll-enabled .activity-showcase { display: grid; grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; gap: 16px; }
+  .activity-scroll-enabled .activity-list { display: block; height: auto; }
+  .activity-scroll-enabled .activity-item { display: none; border: 0; }
+  .activity-scroll-enabled .activity-item.is-active { display: block; }
+  .activity-scroll-enabled .activity-trigger { padding: 0 0 8px; min-height: 0; }
+  .activity-scroll-enabled .activity-item.is-active .activity-title { font-size: clamp(28px, 5.7vw, 40px); }
+  .activity-scroll-enabled .activity-index { font-size: 10px; padding-top: 6px; }
+  .activity-scroll-enabled .activity-toggle { display: none; }
+  .activity-scroll-enabled .activity-body { display: block; padding: 0 0 0 30px; }
+  .activity-scroll-enabled .activity-body[hidden] { display: none; }
+  .activity-scroll-enabled .activity-body > p { max-width: 560px; font-size: 12px; line-height: 1.6; margin: 0 0 8px; }
+  .activity-scroll-enabled .activity-body .text-link { min-height: 32px; font-size: 11px; }
+  .activity-scroll-enabled .activity-visual-overlay { left: 22px; right: 22px; bottom: 60px; }
+  .activity-scroll-enabled .activity-big-number { font-size: 90px; margin-bottom: 0; }
+  .activity-scroll-enabled .activity-visual-overlay > p { display: none; }
+  .activity-scroll-enabled .activity-image-label { left: 22px; right: 22px; height: 44px; }
+  .activity-end { flex-direction: column; gap: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .activity-slide { transition: none; transform: none; }
 }
