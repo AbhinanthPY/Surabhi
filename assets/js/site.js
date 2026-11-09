@@ -33,6 +33,50 @@
   if (copyright) copyright.textContent = copyright.textContent.replace(/\d{4}/, String(new Date().getFullYear()));
   $('.footer-bottom button')?.addEventListener('click', () => scrollToPosition(0));
 
+  const heroVideo = $('.hero-video');
+  if (heroVideo) {
+    const toggle = $('.hero-video-toggle');
+    let inView = false;
+    let userPaused = false;
+    let failed = false;
+
+    function syncHeroVideo() {
+      toggle.hidden = reduce.matches || failed || !heroVideo.hasAttribute('src');
+      if (reduce.matches || failed || !inView || document.hidden || userPaused) {
+        heroVideo.pause();
+        return;
+      }
+      if (!heroVideo.hasAttribute('src')) heroVideo.src = heroVideo.dataset.src;
+      heroVideo.muted = true;
+      heroVideo.play().catch(error => {
+        if (error.name === 'NotAllowedError' && !reduce.matches) toggle.hidden = false;
+      });
+    }
+
+    heroVideo.addEventListener('playing', () => {
+      heroVideo.classList.add('is-ready');
+      toggle.hidden = reduce.matches;
+      toggle.textContent = 'Pause video';
+    });
+    heroVideo.addEventListener('pause', () => { toggle.textContent = 'Play video'; });
+    heroVideo.addEventListener('error', () => {
+      failed = true;
+      heroVideo.classList.remove('is-ready');
+      toggle.hidden = true;
+    });
+    toggle.addEventListener('click', () => {
+      userPaused = !heroVideo.paused;
+      syncHeroVideo();
+    });
+    const observer = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      syncHeroVideo();
+    });
+    observer.observe(heroVideo.closest('.hero'));
+    reduce.addEventListener('change', syncHeroVideo);
+    document.addEventListener('visibilitychange', syncHeroVideo);
+  }
+
   // Native dialog supplies focus containment and Escape behavior.
   const menu = $('#mobile-menu');
   const menuButton = $('.menu-toggle');
@@ -303,7 +347,7 @@
           .fromTo($('.hero-image',hero),{scale:1.045},{scale:1,duration:1.9,ease:'power2.out'},0);
         if (!mobile) {
           gsap.to($('.hero-content',hero),{y:95,opacity:.25,ease:'none',scrollTrigger:{trigger:hero,start:'top top',end:'bottom top',scrub:.65}});
-          gsap.to($('.hero-image img',hero),{yPercent:9,scale:1.07,ease:'none',scrollTrigger:{trigger:hero,start:'top top',end:'bottom top',scrub:.8}});
+          gsap.to($$('.hero-image :is(img, video)',hero),{yPercent:9,scale:1.07,ease:'none',scrollTrigger:{trigger:hero,start:'top top',end:'bottom top',scrub:.8}});
         }
       }
       if (!mobile) $$('[data-parallax]').forEach(image => gsap.fromTo(image,{yPercent:-5},{yPercent:5,ease:'none',scrollTrigger:{trigger:image.closest('.photo'),start:'top bottom',end:'bottom top',scrub:.7}}));

@@ -7098,9 +7098,35 @@ h3 {
   min-height: 810px;
   max-height: 1200px;
 }
-.hero-editorial .hero-image img {
+.hero-editorial .hero-image :is(img, video) {
   object-position: 50% 49%;
   filter: saturate(0.57) brightness(0.82);
+}
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+}
+.hero-video.is-ready {
+  opacity: 1;
+}
+.hero-video-toggle {
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 0 13px;
+  border: 1px solid #f5f3eb70;
+  border-radius: 2px;
+  background: #102e2ac9;
+  color: var(--ivory);
+  font-size: 11px;
+  cursor: pointer;
+}
+.hero-video-toggle:hover {
+  background: #102e2a;
 }
 .hero-editorial .hero-shade {
   background:
@@ -7220,6 +7246,7 @@ h3 {
 }
 .hero-editorial .hero-bottom {
   align-items: center;
+  gap: 8px;
   bottom: 30px;
   border-top: 1px solid #f5f3eb38;
   padding-top: 25px;
@@ -8341,7 +8368,7 @@ h3 {
     min-height: 760px;
     max-height: 1100px;
   }
-  .hero-editorial .hero-image img {
+  .hero-editorial .hero-image :is(img, video) {
     object-position: 50% 46%;
     filter: saturate(0.56) brightness(0.78);
   }
@@ -8879,6 +8906,10 @@ h3 {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .hero-video,
+  .hero-video-toggle {
+    display: none;
+  }
   .activity-selected-image,
   .activity-item.is-active .activity-mobile-image {
     animation: none;
