@@ -4,7 +4,9 @@
   'use strict';
   const soundScript = document.createElement('script');
   soundScript.src = new URL('ambient-audio.js', document.currentScript.src).href;
-  document.head.append(soundScript);
+  const homeLoading = () => document.documentElement.classList.contains('home-loading');
+  if (homeLoading()) document.addEventListener('surabhi:home-revealed', () => document.head.append(soundScript), { once: true });
+  else document.head.append(soundScript);
 
   const $ = (selector, scope = document) => scope.querySelector(selector);
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
@@ -40,13 +42,15 @@
   const heroVideo = $('.hero-video');
   if (heroVideo) {
     const toggle = $('.hero-video-toggle');
+    const connection = navigator.connection;
+    const heroPoster = $('[data-home-hero]');
     let inView = false;
-    let userPaused = false;
+    let userPaused = connection?.saveData || /^(slow-2g|2g|3g)$/.test(connection?.effectiveType ?? '');
     let failed = false;
 
     function syncHeroVideo() {
-      toggle.hidden = reduce.matches || failed || !heroVideo.hasAttribute('src');
-      if (reduce.matches || failed || !inView || document.hidden || userPaused) {
+      toggle.hidden = reduce.matches || failed || homeLoading() || (!userPaused && !heroVideo.hasAttribute('src'));
+      if (reduce.matches || failed || !inView || document.hidden || homeLoading() || userPaused) {
         heroVideo.pause();
         return;
       }
@@ -79,6 +83,11 @@
     observer.observe(heroVideo.closest('.hero'));
     reduce.addEventListener('change', syncHeroVideo);
     document.addEventListener('visibilitychange', syncHeroVideo);
+    document.addEventListener('surabhi:home-revealed', () => {
+      // Give a poster that is still downloading priority over the optional video.
+      if (heroPoster && !heroPoster.complete) userPaused = true;
+      syncHeroVideo();
+    }, { once: true });
   }
 
   // Native dialog supplies focus containment and Escape behavior.
@@ -106,27 +115,6 @@
     menuButton?.focus({preventScroll:true});
   });
   matchMedia('(min-width: 1100px)').addEventListener('change', event => { if (event.matches) closeMenu(); });
-
-  // Responsive images recover to their original JPEG before showing a text fallback.
-  document.addEventListener('error', event => {
-    const image = event.target;
-    if (!(image instanceof HTMLImageElement) || !image.closest('.photo')) return;
-    if (!image.dataset.fallbackAttempted && (image.srcset || image.closest('picture')?.querySelector('source'))) {
-      image.dataset.fallbackAttempted = 'true';
-      image.closest('picture')?.querySelectorAll('source').forEach(source => source.remove());
-      image.removeAttribute('srcset');
-      image.src = image.getAttribute('src');
-    } else {
-      const photo = image.closest('.photo');
-      photo.classList.add('photo-failed');
-      photo.setAttribute('role', 'img');
-      photo.setAttribute('aria-label', image.alt);
-      const fallback = document.createElement('span');
-      fallback.className = 'photo-fallback';
-      fallback.textContent = 'A shared future, rooted in nature.';
-      photo.replaceChildren(fallback);
-    }
-  }, true);
 
   // Directory filters operate on the complete HTML card collection.
   function setupDirectory(section, cardSelector, noun, allLabel, searchEnabled = false) {

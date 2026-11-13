@@ -12,10 +12,90 @@
   <meta property="og:image" content="https://abhinanthpy.github.io/Surabhi/assets/images/cinematic.jpg">
   <link rel="canonical" href="./">
   
+  <style>
+    html.home-loading { overflow: hidden; background: #123d2c; }
+    .home-loader { display: none; }
+    .home-loading .home-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: #123d2c;
+      color: #f5f3eb;
+      font: 400 14px/1.5 system-ui, sans-serif;
+      transition: opacity .28s ease-out;
+    }
+    .home-loader-inner { position: relative; text-align: center; transition: transform .28s ease-out; }
+    .home-loader-name {
+      position: relative;
+      display: block;
+      color: #608272;
+      width: min(72vw, 60rem);
+      user-select: none;
+    }
+    .home-loader-name svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      fill: currentColor;
+    }
+    .home-loader-fill {
+      position: absolute;
+      inset: 0;
+      color: #f5f3eb;
+      clip-path: inset(94% 0 0);
+    }
+    .home-loader-status {
+      display: flex;
+      justify-content: flex-end;
+      align-items: baseline;
+      gap: 1ch;
+      margin: clamp(.65rem, 2vw, 1.5rem) 0 0;
+      color: #e3eadd;
+      font-size: clamp(.75rem, 1.1vw, .95rem);
+    }
+    .home-loader-percent { min-width: 4ch; text-align: right; font-variant-numeric: tabular-nums; }
+    .home-loader-message {
+      position: absolute;
+      inset: calc(100% + 1rem) 0 auto;
+      margin: 0;
+      color: #e3eadd;
+      text-wrap: balance;
+    }
+    .home-loading .home-loader.is-leaving { opacity: 0; pointer-events: none; }
+    .home-loader.is-leaving .home-loader-inner { transform: scale(1.24); }
+    @media (prefers-reduced-motion: reduce) {
+      .home-loading .home-loader, .home-loader-inner { transition: none; }
+    }
+  </style>
+  <script>
+    (() => {
+      const root = document.documentElement;
+      root.classList.add('home-loading', 'images-managed');
+      setTimeout(() => {
+        if (!root.classList.contains('home-loading')) return;
+        const loader = document.querySelector('.home-loader');
+        if (loader && !loader.hasAttribute('data-loader-active')) {
+          loader.querySelector('.home-loader-message').textContent =
+            'Connection seems slow. Still loading the page…';
+        }
+      }, 2000);
+      // Keep the page accessible if a stylesheet or the loader script stalls.
+      setTimeout(() => {
+        if (!root.classList.contains('home-loading')) return;
+        root.classList.remove('home-loading');
+        document.dispatchEvent(new Event('surabhi:home-revealed'));
+      }, 8500);
+    })();
+  </script>
   <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/instrument-serif-italic.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="assets/css/static.css">
+  <script defer src="assets/js/images.js" onerror="document.documentElement.classList.remove('images-managed')"></script>
+  <script defer src="assets/js/home-loader.js"></script>
   <script defer src="assets/js/vendor/gsap.min.js"></script>
   <script defer src="assets/js/vendor/ScrollTrigger.min.js"></script>
   <script defer src="assets/js/vendor/lenis.min.js"></script>
@@ -24,17 +104,38 @@
 <noscript><style>.activity-body[hidden]{display:block!important}.activity-visual{display:none!important}.activity-showcase{display:block!important}.menu-toggle{display:none!important}.desktop-nav{display:flex!important;flex-wrap:wrap}.site-header{position:relative!important}.header-inner-container{flex-wrap:wrap}</style></noscript>
 </head>
 <body>
-<link rel="preload" as="image" href="assets/images/surabhi-logo-transparent.png"/><a class="skip-link" href="#main-content">Skip to content</a>
+<div class="home-loader">
+  <div class="home-loader-inner">
+    <div class="home-loader-name" aria-hidden="true">
+      <!-- Lettering traced from the official logo so the loader needs no external artwork or font. -->
+      <svg viewBox="0 0 547 106" width="547" height="106" focusable="false">
+        <g id="home-loader-wordmark" fill-rule="evenodd">
+          <path d="M56.4 3.6L43.2 2.7Q39 2.4 34.8 2.4L32.4 2.4Q29.6 2.4 26.8 2.9L26.2 2.9Q23.4 3.4 20.8 4.4L17.4 5.8Q14.4 7 12.1 9.2L10.8 10.3Q9.2 11.8 7.9 13.6L7.7 14Q6.4 15.8 5.6 17.8L5.2 18.8Q4.2 21.2 3.8 23.7L3.8 24.3Q3.4 26.8 3.6 29.3L3.6 30.4Q3.8 33.4 4.7 36.2L5 37.1Q6 40.2 8.1 42.6L11.1 46.1Q15.2 51 20.4 54.6L28.7 60.3Q33.4 63.6 37.7 67.4L40.3 69.7Q43 72 44.8 75.1L45.7 76.6Q47 78.8 47 81.3L47 81.9Q47 84.4 46 86.7L45.6 87.7Q44.4 90.4 42.2 92.4L41.3 93.3Q39.2 95.2 36.5 96.1L35.9 96.3Q33.2 97.2 30.4 97.1L28 97Q24.6 96.8 21.5 95.6L20.4 95.2Q17.6 94.2 15.3 92.3L14.7 91.9Q12.4 90 10.8 87.5L10.3 86.8Q8.6 84.2 7.9 81.2L6.6 75.6Q6.4 75 5.9 74.6L5.2 74.2L3.1 81.5Q2 85.6 1.9 89.8L1.9 92.1Q1.8 95 3.8 97.1L4.2 97.5Q6.2 99.6 8.8 100.8L10.2 101.4Q13 102.6 16 103.4L16.6 103.6Q19.6 104.4 22.7 104.6L24.3 104.7Q28.2 105 32.1 104.7L34.7 104.5Q38.2 104.2 41.6 103.2L42.4 103Q45.8 102 48.9 100.2L50.8 99.2Q53.2 97.8 55.3 95.9L55.7 95.5Q57.8 93.6 59.3 91.2L60.1 90Q61.8 87.4 62.8 84.5L63 83.9Q64 81 64.1 78L64.1 76.8Q64.2 73.4 63.6 70L63.3 68.6Q62.8 65.6 61.4 62.9L61.1 62.3Q59.8 59.6 57.8 57.4L56.1 55.4Q53 52 49.2 49.4L40 43.3Q35.4 40.2 31 36.8L27.7 34.2Q25.6 32.6 23.8 30.6L23.3 30Q21.6 28.2 20.8 25.9L20.6 25.2Q19.8 23 20.2 20.7L20.2 20.1Q20.6 17.8 22 15.9L22.4 15.3Q23.8 13.2 25.9 11.9L26.4 11.5Q28.6 10.2 31.1 9.8L31.7 9.6Q34.2 9.2 36.8 9.4L37.8 9.4Q40.2 9.6 42.5 10.4L43 10.6Q45.2 11.4 47 12.9L48.1 13.8Q50.4 15.8 51.7 18.6L53.4 22.4L54.4 22.6L56.9 5.1Q57 4.6 56.7 4.1Z"/>
+          <path d="M71.8 18.2L72 18.6Q72.2 19 72.6 19.1L75.1 20Q77.2 20.8 78.3 22.8L78.5 23.2Q79.6 25.2 79.6 27.5L80.3 70.3Q80.4 75.2 81.5 80L81.9 81.9Q82.8 85.8 84.8 89.2L85.5 90.5Q87.2 93.4 89.6 95.7L90.4 96.4Q92.6 98.4 95.2 99.8L95.8 100.2Q98.4 101.6 101.3 102.4L102.5 102.8Q105.8 103.8 109.2 104.3L110.5 104.5Q114.4 105 118.3 104.9L120.5 104.9Q123.4 104.8 126.3 104.3L126.9 104.1Q129.8 103.6 132.5 102.5L133.8 101.9Q137 100.6 139.8 98.5L140.4 98.1Q143.2 96 145.1 93.1L146.3 91.4Q148.8 87.6 149.9 83.2L150.5 80.7Q151.8 75 151.8 69.2L152.2 29.2Q152.2 27.6 152.5 26.1L152.5 25.7Q152.8 24.2 153.6 22.9L154 22.3Q155 20.8 156.7 20.2L160 19.2L160 18.2L134.2 18.2L134.6 19.2L138.5 20.1Q139.6 20.4 140.4 21.2L140.6 21.4Q141.4 22.2 141.8 23.3L142.1 24Q142.6 25.4 142.6 26.9L142.4 74Q142.4 77 141.7 79.9L141.5 80.5Q140.8 83.4 139.3 86L138.8 86.9Q137.2 89.8 134.7 92L133.9 92.7Q131.2 95 127.8 96L127 96.2Q123.6 97.2 120.1 97L119.3 97Q115.8 96.8 112.6 95.3L111.5 94.8Q108 93.2 105.7 90.1L103.1 86.5Q101.4 84.2 100.5 81.5L100.3 80.9Q99.4 78.2 99.2 75.4L98.9 70.1Q98.4 63.4 98.5 56.7L98.8 28Q98.8 26 99.5 24.1L99.9 23Q100.4 21.8 101.4 21L101.6 20.8Q102.6 20 103.8 19.7L106 19.2L106.4 18.2Z"/>
+          <path d="M397.2 33.6Q397 31.4 396 29.4L395.8 29Q394.8 27 393.2 25.4L392.6 24.8Q390.8 23 388.6 21.8L386.8 20.8Q385 19.8 383 19.2L382.6 19Q380.6 18.4 378.5 18.2L376.6 18Q373.4 17.6 370.1 17.7L334.6 18.2L335.2 19.4L337 19.8Q338.4 20.2 339.5 21.2L339.8 21.4Q341 22.4 341.5 23.8L341.8 24.6Q342.4 26.4 342.4 28.3L342.6 92.7Q342.6 94.2 342.1 95.5L341.9 95.9Q341.4 97.2 340.3 98.2L339.8 98.7Q338.4 100 336.6 100.6L335.6 100.9Q333.4 101.6 331.3 100.4L329.7 99.5Q326.6 97.8 324.8 94.8L323.9 93.2Q321.6 89.4 320 85.3L318.5 81.1Q316 74.6 313.1 68.2L308.1 57.6Q305.2 51.2 302.5 44.8L291 17.8Q290.6 16.8 289.7 16.3L288.6 15.6L281.3 31.4Q278.4 37.8 275.7 44.3L256.2 90.9Q255.2 93.2 253.8 95.3L253.5 95.8Q252.2 97.8 249.9 98.6L247.2 99.6L245.2 98.5Q243.6 97.6 242.3 96.3L241.7 95.7Q240.2 94.2 239 92.4L233.3 83.3Q229.6 77.4 225.2 71.9L218.6 63.6L226.6 57.5Q228.4 56.2 229.7 54.4L229.9 54Q231.2 52.2 232 50.2L232.5 49.2Q233.2 47.4 233.6 45.5L233.6 45.1Q234 43.2 233.9 41.3L233.6 37Q233.4 34.6 232.5 32.4L232.2 31.6Q231.4 29.6 230.1 27.9L229.8 27.5Q228.4 25.8 226.7 24.5L225.4 23.5Q223 21.6 220.1 20.6L217.9 19.8Q213.8 18.4 209.4 18.3L167.2 17.8Q166.8 17.8 166.4 18.1L166 18.4L166.6 19.6L168.6 19.8Q170.2 20 171.5 21L171.7 21.2Q173 22.2 173.6 23.7L173.8 24.2Q174.4 25.8 174.4 27.5L174.6 85.8Q174.6 88.6 174.4 91.4L174.3 93.2Q174.2 94.8 173.7 96.3L173.5 96.7Q173 98.2 171.7 99.2L171.3 99.6Q170 100.6 168.4 100.8L166.4 101L165.8 102.2L167.9 102.6Q169.6 103 171.3 103L201 102.6L200.6 101.2L197.1 100.3Q196 100 195.2 99.2L195 99Q194.2 98.2 193.8 97.1L193.6 96.5Q193.2 95.2 193.2 93.8L193 66.8Q193 65.2 193.5 63.7L194.2 61.8L194.9 62.6Q195.4 63.2 196.2 63.3L199.1 63.8Q200 64 200.6 64.6L200.8 64.8Q201.4 65.4 201.8 66.2L211.8 84.9Q213.6 88.2 215.7 91.4L216.4 92.5Q218.2 95.2 220.6 97.4L221.5 98.1Q223.6 100 226.2 101L226.8 101.2Q229.4 102.2 232.2 102.5L233.5 102.6Q236.8 103 240.1 103L269.2 102.8L269.4 101.4L267.5 100.7Q266 100.2 265.1 98.8L263.8 96.8L269.2 82.4Q269.6 81.4 270.4 80.7L270.6 80.5Q271.4 79.8 272.5 79.8L297.4 80L303.4 94.3Q304 95.8 303.7 97.4L303.4 99.4L299.6 101.4L300.6 102.8L330.3 102.8Q331.4 102.8 332.4 102.3L333.6 101.8L334.4 102.3Q335 102.8 335.8 102.8L371.6 103Q376.8 103 381.9 102L384.8 101.5Q388.2 100.8 391.3 99.2L392.6 98.5Q395 97.2 397 95.4L397.4 95Q399.4 93.2 400.8 90.9L401.4 90Q402.8 87.8 403.4 85.3L403.6 84.7Q404.2 82.2 404.1 79.6L404.1 77.8Q404 74.2 402.8 70.8L402.5 70Q401.2 66.6 398.7 63.9L397.9 63.1Q395.2 60.2 391.7 58.4L386.8 55.8L392.8 50.4Q394.4 49 395.5 47.2L395.7 46.8Q396.8 45 397.3 43L397.5 42.4Q398 40.2 397.7 38Z M284.6 46.2L294.8 72.2L294.2 72.6Q293.8 73 293.2 73L274.6 73.4L273.6 71.8L282.9 48.2Q283.2 47.4 283.8 46.9Z M361.4 24.6L366.5 24.7Q368.6 24.8 370.6 25.6L371 25.8Q373 26.6 374.4 28.2L375.8 29.8Q377.4 31.6 378.1 33.9L378.3 34.5Q379 36.8 378.9 39.2L378.9 41.8Q378.8 44.6 377.8 47.2L377.4 48.3Q376.6 50.4 375.1 52L374.7 52.4Q373.2 54 371.1 54.6L367.6 55.5Q366.6 55.8 366 56.6L365.2 57.6L371.6 59.5Q373.4 60 375 61L375.4 61.2Q377 62.2 378.3 63.6L378.9 64.2Q380.4 65.8 381.4 67.8L381.8 68.5Q382.8 70.6 383.3 72.8L383.5 73.3Q384 75.6 384 77.9L384 79.3Q384 82.4 382.9 85.2L382.1 87.3Q381 90 378.8 91.9L378.1 92.5Q376.2 94.2 373.8 94.9L373.2 95.1Q370.8 95.8 368.3 95.7L363.2 95.4Q362.4 95.4 361.9 94.9L361.7 94.7Q361.2 94.2 361 93.5L360.9 92.8Q360.6 91.6 360.6 90.4L360.6 26.2Q360.6 25.6 361 25.2Z M193.6 24.6L197.8 24.6Q200.8 24.6 203.7 25.5L205.1 25.9Q207.2 26.6 208.9 28L209.3 28.4Q211 29.8 212 31.8L212.7 33Q214 35.6 214.3 38.5L214.5 41.7Q214.8 44.6 214.2 47.5L214 48.1Q213.4 51 211.7 53.4L210.5 55Q209 57.2 206.7 58.5L206.1 58.7Q203.8 60 201.1 60.1L196.3 60.2Q195.6 60.2 195 60.6L194.2 61L193.5 60.2Q193 59.6 193 58.8L192.8 26.2Q192.8 25.6 193.2 25.2Z"/>
+          <path d="M409.6 17.8L409.9 18.4Q410.2 18.8 410.7 19L413.9 20Q415.2 20.4 416.1 21.5L416.4 21.8Q417.2 22.8 417.6 24.1L417.6 24.3Q418 25.6 418 26.9L418.3 56.4Q418.4 63.4 418.3 70.4L418 93.1Q418 94.8 417.4 96.3L417.1 96.9Q416.6 98.2 415.5 99.1L415.3 99.3Q414.2 100.2 412.8 100.4L410.6 100.8L410.4 102.4L444.2 102.6Q444.6 102.6 444.9 102.3L445.2 102L444.6 100.8L442.7 100.5Q441.2 100.2 439.9 99.3L439.7 99.1Q438.4 98.2 438 96.7L437.6 95.5Q437 93.2 437 90.9L436.8 65.6Q436.8 64.8 437.3 64.2L437.5 64Q438 63.4 438.8 63.3L441 63.1Q443.4 62.8 445.8 62.8L471.3 63Q471.8 63 472.2 63.3L472.8 63.6L472.6 93Q472.6 94.8 471.9 96.4L471.6 97Q471 98.4 469.7 99.3L469.2 99.7Q468.2 100.4 466.9 100.6L465.4 100.8L465.4 102.4L499.8 102.2L499.4 100.6L496.6 99.9Q494.6 99.4 493.4 97.7L493.2 97.3Q492 95.6 492 93.5L491.6 75.8Q491.4 68.8 491.5 61.8L491.8 25.7Q491.8 24 492.6 22.6L492.9 22Q493.6 20.8 494.8 20.1L495 19.9Q496.2 19.2 497.6 18.9L499.4 18.6L499.2 17.4L465 17.4L465.4 18.8L468.8 20.1Q470.4 20.8 471.3 22.3L471.5 22.7Q472.4 24.2 472.4 26L472.8 54.6L471.9 55.1Q471.2 55.6 470.4 55.6L443.6 55.8Q442 55.8 440.4 55.7L439.1 55.6Q438.4 55.6 437.9 55.1L437.2 54.6L436.8 29.5Q436.8 27 437.6 24.7L438.1 23.3Q438.6 21.8 439.9 20.8L440.2 20.6Q441.4 19.6 442.9 19.2L444.8 18.8L444.6 17.4Z"/>
+          <path d="M509.4 17L508.6 18.2L512.2 19.5Q513.8 20 514.9 21.3L515.4 21.9Q516.2 22.8 516.6 24L516.6 24.2Q517 25.4 517 26.6L517.2 84.3Q517.2 87.4 517 90.5L516.9 92.7Q516.8 94.2 516.3 95.6L516.2 96Q515.8 97.4 514.7 98.5L514.4 98.8Q513.2 100 511.6 100.3L509.9 100.7Q509.4 100.8 509.1 101.2L508.8 101.8L509.9 102.1Q510.8 102.4 511.7 102.4L543.8 102.6L544.4 101L540.9 99.6Q538.8 98.8 537.7 96.8L537.5 96.4Q536.4 94.4 536.4 92.1L535.9 47.8Q535.8 40.8 536 33.8L536.3 25.8Q536.4 23.6 537.8 21.9L538.3 21.3Q539.6 19.8 541.5 19.3L543.4 18.7Q543.8 18.6 544 18.2L544.2 17.8L543.9 17.5Q543.6 17.2 543.2 17.2Z"/>
+        </g>
+      </svg>
+      <svg class="home-loader-fill" viewBox="0 0 547 106" width="547" height="106" focusable="false">
+        <use href="#home-loader-wordmark"/>
+      </svg>
+    </div>
+    <div class="home-loader-status" role="status"><span>Loading Surabhi</span><span class="home-loader-percent" aria-hidden="true">0%</span></div>
+    <p class="home-loader-message" role="status"></p>
+  </div>
+</div>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <div class="scroll-progress" aria-hidden="true">
 </div>
 <header class="site-header  header-home">
-<div class="header-inner-container"><a class="brand brand-official " aria-label="Surabhi home" href="index.html"><img src="assets/images/surabhi-logo-transparent.png" alt="Surabhi Multi State Co-operative Dairy Society Ltd." width="1437" height="1094" decoding="async"/></a>
+<div class="header-inner-container"><a class="brand brand-official " aria-label="Surabhi home" href="index.html"><img src="assets/images/surabhi-logo-web.webp" data-image-fallback="assets/images/surabhi-logo-transparent.png" alt="Surabhi Multi State Co-operative Dairy Society Ltd." width="1437" height="1094" decoding="async"/></a>
 <nav class="desktop-nav" aria-label="Main navigation"><a aria-current="page" class="active" href="index.html">Home</a><a class="" href="about.html">About</a><a class="" href="activities.html">Our Activities</a><a class="" href="projects.html">Projects</a><a class="" href="news.html">News &amp; Insights</a>
 </nav><a class="header-contact" href="contact.html">Let’s connect <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a><button class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button>
 </div>
 </header>
 <dialog id="mobile-menu" class="mobile-menu">
-<div class="mobile-menu-top"><a class="brand brand-official " aria-label="Surabhi home" href="index.html"><img src="assets/images/surabhi-logo-transparent.png" alt="Surabhi Multi State Co-operative Dairy Society Ltd." width="1437" height="1094" decoding="async"/></a><button class="menu-close" aria-label="Close navigation"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+<div class="mobile-menu-top"><a class="brand brand-official " aria-label="Surabhi home" href="index.html"><img loading="lazy" src="assets/images/surabhi-logo-web.webp" data-image-fallback="assets/images/surabhi-logo-transparent.png" alt="Surabhi Multi State Co-operative Dairy Society Ltd." width="1437" height="1094" decoding="async"/></a><button class="menu-close" aria-label="Close navigation"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
 </div><span class="eyebrow">Explore our world</span>
 <nav aria-label="Mobile navigation"><a aria-current="page" class="active" href="index.html"><span class="menu-number">01</span>Home<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a><a class="" href="about.html"><span class="menu-number">02</span>About<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a><a class="" href="activities.html"><span class="menu-number">03</span>Our Activities<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a><a class="" href="projects.html"><span class="menu-number">04</span>Projects<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a><a class="" href="news.html"><span class="menu-number">05</span>News &amp; Insights<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a><a class="" href="contact.html"><span class="menu-number">06</span>Contact<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
 </nav>
@@ -46,9 +147,9 @@
 <section class="hero hero-editorial" aria-labelledby="hero-heading">
 <div class="photo hero-image ">
 <picture>
-<source media="(max-width: 640px)" type="image/webp" srcSet="assets/images/cinematic-mobile.webp"/>
-<source media="(max-width: 640px)" srcSet="assets/images/cinematic-mobile.jpg"/>
-<source type="image/webp" srcSet="assets/images/cinematic-small.webp 640w, assets/images/cinematic.webp 1920w" sizes="100vw"/><img src="assets/images/cinematic.jpg" srcSet="assets/images/cinematic-small.jpg 640w, assets/images/cinematic.jpg 1920w" sizes="100vw" width="1920" height="1200" alt="Dairy cattle in a misty Western Ghats pasture at dawn" loading="eager" fetchPriority="high" decoding="async"/>
+<source media="(max-width: 640px)" type="image/webp" srcSet="assets/images/cinematic-mobile-small.webp 480w, assets/images/cinematic-mobile.webp 780w" sizes="100vw"/>
+<source media="(max-width: 640px)" srcSet="assets/images/cinematic-mobile-small.jpg 480w, assets/images/cinematic-mobile.jpg 780w" sizes="100vw"/>
+<source type="image/webp" srcSet="assets/images/cinematic-small.webp 640w, assets/images/cinematic-medium.webp 1280w, assets/images/cinematic.webp 1920w" sizes="100vw"/><img src="assets/images/cinematic.jpg" srcSet="assets/images/cinematic-small.jpg 640w, assets/images/cinematic-medium.jpg 1280w, assets/images/cinematic.jpg 1920w" sizes="100vw" width="1920" height="1200" alt="Dairy cattle in a misty Western Ghats pasture at dawn" data-home-hero loading="eager" fetchPriority="high" decoding="async"/>
 </picture>
 <video class="hero-video" data-src="assets/videos/surabhi-hero.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
 </div>
@@ -514,7 +615,7 @@
 </main>
 <footer class="site-footer">
 <div class="footer-top">
-<div class="footer-identity"><a class="brand brand-official brand-footer" aria-label="Surabhi home" href="index.html"><img src="assets/images/surabhi-logo-transparent.png" alt="Surabhi Multi State Co-operative Dairy Society Ltd." width="1437" height="1094" decoding="async"/></a>
+<div class="footer-identity"><a class="brand brand-official brand-footer" aria-label="Surabhi home" href="index.html"><img loading="lazy" src="assets/images/surabhi-logo-web.webp" data-image-fallback="assets/images/surabhi-logo-transparent.png" alt="Surabhi Multi State Co-operative Dairy Society Ltd." width="1437" height="1094" decoding="async"/></a>
 <p>Surabhi Multi State Co-operative Dairy Society Ltd.</p><span>Rooted in co-operation.<br/>Growing beyond boundaries.</span>
 </div>
 <div class="footer-links"><span class="footer-label">Explore</span><a href="about.html">Our story</a><a href="projects.html">Proposed initiatives</a><a href="governance.html">Leadership &amp; governance</a><a href="news.html">News &amp; insights</a>
