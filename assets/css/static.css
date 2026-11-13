@@ -81,3 +81,17 @@
   .site-sound,
   .site-sound[data-state="playing"] .site-sound-wave { animation: none; transition: none; }
 }
+
+/* Preserve each image's layout while it downloads or recovers from an error. */
+.images-managed img:not([data-image-ready]),
+img[data-image-unavailable] {
+  visibility: hidden;
+}
+.brand.brand-official img[hidden] { display: none; }
+.brand-text-fallback {
+  color: var(--forest);
+  font: 400 clamp(1.65rem, 3vw, 2.5rem)/1 "Instrument Serif", Georgia, serif;
+}
+.header-home:not(.is-scrolled) .brand-text-fallback,
+.mobile-menu .brand-text-fallback,
+.brand-footer .brand-text-fallback { color: var(--ivory); }
