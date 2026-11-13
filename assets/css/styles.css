@@ -7110,6 +7110,7 @@ h3 {
   object-fit: cover;
   opacity: 0;
   pointer-events: none;
+  transition: opacity .32s ease-out;
 }
 .hero-video.is-ready {
   opacity: 1;

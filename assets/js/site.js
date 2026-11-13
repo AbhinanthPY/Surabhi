@@ -44,26 +44,31 @@
     const toggle = $('.hero-video-toggle');
     const connection = navigator.connection;
     const heroPoster = $('[data-home-hero]');
+    const mobileVideo = matchMedia('(max-width: 640px)');
     let inView = false;
     let userPaused = connection?.saveData || /^(slow-2g|2g|3g)$/.test(connection?.effectiveType ?? '');
     let failed = false;
 
     function syncHeroVideo() {
       toggle.hidden = reduce.matches || failed || homeLoading() || (!userPaused && !heroVideo.hasAttribute('src'));
-      if (reduce.matches || failed || !inView || document.hidden || homeLoading() || userPaused) {
+      if (reduce.matches || failed || !inView || document.hidden || userPaused) {
         heroVideo.pause();
         return;
       }
-      if (!heroVideo.hasAttribute('src')) heroVideo.src = heroVideo.dataset.src;
+      // Start buffering as soon as the hero photo is available, during the loader's exit.
+      if (homeLoading() && !heroPoster?.hasAttribute('data-image-ready')) return;
+      if (!heroVideo.hasAttribute('src')) {
+        heroVideo.src = mobileVideo.matches ? heroVideo.dataset.mobileSrc : heroVideo.dataset.src;
+      }
       heroVideo.muted = true;
       heroVideo.play().catch(error => {
-        if (error.name === 'NotAllowedError' && !reduce.matches) toggle.hidden = false;
+        if (error.name === 'NotAllowedError' && !reduce.matches && !homeLoading()) toggle.hidden = false;
       });
     }
 
     heroVideo.addEventListener('playing', () => {
       heroVideo.classList.add('is-ready');
-      toggle.hidden = reduce.matches;
+      toggle.hidden = reduce.matches || homeLoading();
       toggle.textContent = 'Pause video';
     });
     heroVideo.addEventListener('pause', () => { toggle.textContent = 'Play video'; });
@@ -83,6 +88,7 @@
     observer.observe(heroVideo.closest('.hero'));
     reduce.addEventListener('change', syncHeroVideo);
     document.addEventListener('visibilitychange', syncHeroVideo);
+    heroPoster?.addEventListener('surabhi:image-settled', syncHeroVideo);
     document.addEventListener('surabhi:home-revealed', () => {
       // Give a poster that is still downloading priority over the optional video.
       if (heroPoster && !heroPoster.complete) userPaused = true;
